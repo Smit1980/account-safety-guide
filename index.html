@@ -1152,18 +1152,21 @@ python scripts/run_demo.py retail</pre>
     <table>
       <thead><tr><th>Где вы запускаете Claude Code</th><th>Мод работает</th><th>Интерфейс мода виден</th></tr></thead>
       <tbody>
-        <tr><td><code>claude</code> в терминале</td><td>да</td><td>да</td></tr>
-        <tr><td>Вкладка Code в приложении Claude</td><td>да</td><td>да, кроме элементов «только для терминала»</td></tr>
-        <tr><td>Расширение для VS Code</td><td>да</td><td>нет</td></tr>
-        <tr><td>Автозапуск <code>claude -p</code></td><td>да</td><td>нет</td></tr>
+        <tr><td><code>claude</code> в терминале (в том числе встроенный терминал редактора и плагин JetBrains)</td><td>да</td><td>да</td></tr>
+        <tr><td>Вкладка Code в приложении Claude</td><td>да</td><td>да, кроме элементов, помеченных в справочнике «только для терминала»</td></tr>
+        <tr><td>Сессия WSL в приложении Claude</td><td>нет: плагины в сессиях WSL недоступны</td><td>нет</td></tr>
+        <tr><td>Чат в расширении для VS Code</td><td>да</td><td>да, с расширением 2.1.299 или новее; в сессии без загрузки флагов функций (например, на Amazon Bedrock) нужно 2.1.304 или новее</td></tr>
+        <tr><td><code>claude -p</code> и Agent SDK</td><td>да</td><td>нет</td></tr>
+        <tr><td>Remote Control (claude.ai и мобильное приложение)</td><td>да, в сессии на вашем компьютере</td><td>в терминале на вашем компьютере</td></tr>
+        <tr><td>Облачная сессия</td><td>да, для плагина, который попадает в облачную сессию</td><td>нет</td></tr>
       </tbody>
     </table>
   </div>
-  <p class="sec-desc fade" style="margin-top:12px">Полоса над строкой ввода (на ней стоят Token Weather и Next steps) рисуется только в терминале.</p>
+  <p class="sec-desc fade" style="margin-top:12px">Таблица составлена по официальной документации Anthropic (раздел «Where mods run» обзора модов) и может измениться. Какие именно элементы интерфейса работают только в терминале, смотрите в справочнике модов (mods/reference, таблица elements).</p>
 
   <h3 class="sub fade">Шаг 1. Проверьте, что моды работают</h3>
   <ol class="steps fade">
-    <li>Обновите Claude Code и проверьте версию: нужна <b>2.1.287 или новее</b> (по материалу).</li>
+    <li>Обновите Claude Code и проверьте версию. В терминале нужна <b>2.1.287 или новее</b> (<code>claude --version</code>). В приложении Claude своя копия Claude Code: моды работают с <b>2.1.286</b>; версию смотрите во вкладке Code командой <code>/status</code>, строка «Claude Code». Моды включены по умолчанию и не привязаны к тарифу, но войти в Claude Code нужно: подпиской Pro или Max, через Console/API или через Bedrock, Vertex, Foundry.</li>
     <li>Если версия ниже, у вас, вероятно, стабильный канал обновлений (отстаёт примерно на неделю). Переключение: <code>/config</code> → Auto-update channel → <code>latest</code>. При установке через Homebrew канал задаёт название пакета: <code>claude-code</code> — стабильный, <code>claude-code@latest</code> — самый новый.</li>
     <li>Проверьте, включены ли моды для вашей учётной записи: <code>claude plugin test</code>. Ответ «no hooks module to load» хороший: моды загружаются, просто в этой папке нет мода для проверки.</li>
   </ol>
@@ -1456,7 +1459,7 @@ claude plugin install recording-mode@nateherk-mods</pre>
       <li><label><input type="checkbox" data-checklist-item="c17"> Включил Dependabot и двухфакторную защиту/ключ доступа на GitHub</label></li>
       <li><label><input type="checkbox" data-checklist-item="c18"> Все рабочие проекты лежат в приватных репозиториях, а .gitignore написан до первого коммита</label></li>
       <li><label><input type="checkbox" data-checklist-item="c19"> Запустил промпт проверки из шага 5 и поставил его на каждую неделю</label></li>
-      <li><label><input type="checkbox" data-checklist-item="c20"> Обновил Claude Code до 2.1.287+ и проверил моды командой claude plugin test</label></li>
+      <li><label><input type="checkbox" data-checklist-item="c20"> Обновил Claude Code (терминал 2.1.287+, приложение 2.1.286+) и проверил моды командой claude plugin test</label></li>
       <li><label><input type="checkbox" data-checklist-item="c21"> Сделал свой первый мод (Token Weather) и сохранил его в ~/my-mods</label></li>
       <li><label><input type="checkbox" data-checklist-item="c22"> Перед установкой чужого мода запускаю claude plugin validate и читаю строки hooks: и calls:</label></li>
       <li><label><input type="checkbox" data-checklist-item="c23"> Знаю, как выключить моды: /plugin, claude --safe-mode, disableAllHooks</label></li>
