@@ -8,150 +8,178 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#f0f2f7;--card:#ffffff;--border:#e2e8f0;
-  --indigo:#6366f1;--indigo-dk:#4338ca;--indigo-lt:#eef2ff;
-  --cyan:#0ea5e9;--cyan-lt:#e0f2fe;
-  --amber:#f59e0b;--amber-lt:#fffbeb;
-  --green:#16a34a;--green-lt:#f0fdf4;
-  --red:#dc2626;--red-lt:#fef2f2;
-  --text:#0f172a;--muted:#64748b;--nav-h:56px;
+  color-scheme:light;
+  --bg:#ffffff;--ink:#000000;--muted:#6f6c6a;
+  --grey:rgba(128,126,125,.12);--grey-solid:#f3f2f1;--grey-2:#e9e7e5;
+  --orange:#ff8d28;--orange-dk:#e87610;--orange-lt:#fff1e3;
+  --blue:#3b82f6;--blue-lt:#e8f0ff;
+  --green:#1f9d55;--green-lt:#e7f6ec;
+  --red:#d6362b;--red-lt:#fdeceb;
+  --r-lg:32px;--r-md:22px;--r-pill:200px;
+  --nav-h:64px;
+  --font:"General Sans","Inter","Segoe UI",system-ui,-apple-system,sans-serif;
 }
-html{scroll-behavior:smooth;background:var(--bg);scroll-padding-top:70px}
-body{
-  font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
-  background:
-    radial-gradient(circle at 12% 0%,rgba(99,102,241,.14),transparent 32%),
-    radial-gradient(circle at 85% 6%,rgba(14,165,233,.13),transparent 34%),
-    linear-gradient(180deg,#f8fafc 0%,#eef2ff 30%,#f8fafc 100%);
-  color:var(--text);line-height:1.65;overflow-x:hidden;
-}
-nav.top{position:fixed;top:0;left:0;right:0;height:var(--nav-h);background:rgba(255,255,255,.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);box-shadow:0 1px 10px rgba(0,0,0,.06);display:flex;align-items:center;padding:0 20px;z-index:900;gap:2px;overflow-x:auto;scrollbar-width:none}
+html{scroll-behavior:smooth;background:var(--bg);scroll-padding-top:84px;-webkit-font-smoothing:antialiased}
+body{font-family:var(--font);font-weight:500;letter-spacing:-.01em;background:var(--bg);color:var(--ink);line-height:1.6;overflow-x:hidden}
+a{color:inherit}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--orange);outline-offset:3px}
+
+/* NAV: белая панель, серые пилюли, оранжевое действие */
+nav.top{position:fixed;top:12px;left:12px;right:12px;height:var(--nav-h);background:rgba(255,255,255,.88);backdrop-filter:blur(14px);border-radius:var(--r-pill);box-shadow:0 0 0 1px rgba(128,126,125,.14);display:flex;align-items:center;padding:0 12px 0 20px;z-index:900;gap:4px;overflow-x:auto;scrollbar-width:none}
 nav.top::-webkit-scrollbar{display:none}
-.nav-logo{font-weight:900;font-size:.93rem;color:var(--indigo-dk);white-space:nowrap;margin:0 10px 0 4px;flex-shrink:0}
-.nav-sep{width:1px;height:18px;background:var(--border);margin:0 6px;flex-shrink:0}
-.nav-link{padding:5px 10px;border-radius:6px;font-size:.75rem;font-weight:700;color:var(--muted);text-decoration:none;white-space:nowrap;transition:color .2s,background .2s;flex-shrink:0}
-.nav-link:hover,.nav-link.active{color:var(--indigo);background:var(--indigo-lt)}
-a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--indigo);outline-offset:2px}
+.nav-logo{font-weight:700;font-size:1rem;white-space:nowrap;margin-right:8px;flex-shrink:0;letter-spacing:-.02em}
+.nav-sep{width:1px;height:20px;background:var(--grey-2);margin:0 8px;flex-shrink:0}
+.nav-link{padding:8px 14px;border-radius:var(--r-pill);font-size:.82rem;font-weight:600;color:var(--muted);text-decoration:none;white-space:nowrap;transition:background .2s,color .2s;flex-shrink:0}
+.nav-link:hover{background:var(--grey);color:var(--ink)}
+.nav-link.active{background:var(--ink);color:#fff}
 
-#hero{min-height:88vh;padding:calc(var(--nav-h) + 56px) 24px 56px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
-.hero-badges{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:22px}
-.hero-badge{padding:5px 14px;background:var(--indigo-lt);border:1px solid #c7d2fe;border-radius:100px;font-size:.78rem;font-weight:700;color:var(--indigo-dk)}
-.hero-title{font-size:clamp(2rem,5.5vw,3.6rem);font-weight:900;line-height:1.12;letter-spacing:-1.5px;margin-bottom:16px;max-width:900px}
-.hero-title em{color:var(--indigo);font-style:normal}
-.hero-sub{font-size:1.05rem;color:var(--muted);max-width:680px;margin-bottom:32px}
-.hero-nav{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:820px}
-.hero-nav a{padding:8px 16px;border-radius:10px;background:var(--card);border:1px solid var(--border);font-size:.82rem;font-weight:600;color:var(--text);text-decoration:none;box-shadow:0 2px 8px rgba(15,23,42,.05);transition:transform .15s,box-shadow .15s}
-.hero-nav a:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(99,102,241,.15)}
+/* HERO */
+#hero{position:relative;min-height:92vh;padding:calc(var(--nav-h) + 80px) 24px 72px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;overflow:hidden}
+#hero::before{content:"";position:absolute;inset:0;z-index:-1;background:
+  radial-gradient(520px 320px at 85% 78%,rgba(59,130,246,.22),transparent 70%),
+  radial-gradient(420px 300px at 8% 20%,rgba(255,141,40,.14),transparent 70%),
+  radial-gradient(600px 400px at 50% 100%,rgba(128,126,125,.10),transparent 70%)}
+.hero-badges{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:26px}
+.hero-badge{padding:7px 16px;background:var(--grey);border-radius:var(--r-pill);font-size:.8rem;font-weight:600}
+.hero-title{font-size:clamp(2.6rem,8vw,5.6rem);font-weight:600;line-height:1.02;letter-spacing:-.045em;margin-bottom:22px;max-width:980px}
+.hero-title em{font-style:normal;color:var(--orange)}
+.hero-sub{font-size:1.1rem;color:var(--muted);max-width:640px;margin-bottom:34px;letter-spacing:-.015em}
+.hero-nav{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:860px}
+.hero-nav a{padding:11px 22px;border-radius:var(--r-pill);background:var(--grey);font-size:.9rem;font-weight:600;text-decoration:none;transition:background .2s,transform .15s}
+.hero-nav a:hover{background:var(--grey-2);transform:translateY(-1px)}
+.hero-nav a.cta{background:var(--orange);color:#fff}
+.hero-nav a.cta:hover{background:var(--orange-dk)}
 
-.sec{max-width:1080px;margin:0 auto;padding:64px 24px}
-.sec-head{margin-bottom:30px}
-.num-badge{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:13px;font-size:1.1rem;font-weight:900;color:#fff;margin-bottom:14px}
-.n1{background:linear-gradient(135deg,#6366f1,#818cf8)}
-.n2{background:linear-gradient(135deg,#0ea5e9,#38bdf8)}
-.n3{background:linear-gradient(135deg,#8b5cf6,#a78bfa)}
-.n4{background:linear-gradient(135deg,#16a34a,#4ade80)}
-.n5{background:linear-gradient(135deg,#f59e0b,#fbbf24)}
-.n6{background:linear-gradient(135deg,#ec4899,#f472b6)}
-.n7{background:linear-gradient(135deg,#dc2626,#f87171)}
-.n8{background:linear-gradient(135deg,#0891b2,#22d3ee)}
-.n9{background:linear-gradient(135deg,#4338ca,#6366f1)}
-.sec-title{font-size:clamp(1.5rem,3vw,2.2rem);font-weight:800;letter-spacing:-.5px;margin-bottom:10px}
-.sec-desc{font-size:1rem;color:var(--muted);max-width:780px;line-height:1.75}
-.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px;box-shadow:0 2px 10px rgba(15,23,42,.04)}
+/* ЧАСТИ */
+.part{max-width:1120px;margin:40px auto 0;padding:56px 24px 0;text-align:center}
+.part span{display:inline-block;padding:6px 16px;border-radius:var(--r-pill);background:var(--ink);color:#fff;font-size:.78rem;font-weight:600;letter-spacing:.02em;margin-bottom:14px}
+.part h2{font-size:clamp(2rem,5vw,3.4rem);font-weight:600;letter-spacing:-.04em;line-height:1.05;max-width:820px;margin:0 auto 12px}
+.part p{color:var(--muted);max-width:640px;margin:0 auto}
+
+/* СЕКЦИИ */
+.sec{max-width:1080px;margin:0 auto;padding:56px 24px}
+.sec-head{margin-bottom:28px}
+.num-badge{display:inline-flex;align-items:center;justify-content:center;min-width:40px;height:40px;padding:0 14px;border-radius:var(--r-pill);font-size:.95rem;font-weight:700;color:var(--ink);background:var(--grey);margin-bottom:16px}
+.sec-title{font-size:clamp(1.7rem,3.6vw,2.6rem);font-weight:600;letter-spacing:-.035em;line-height:1.08;margin-bottom:12px}
+.sec-desc{font-size:1.02rem;color:var(--muted);max-width:760px;line-height:1.7}
+.sec-desc a,.card a:not(.btn),.note-callout a,.warn-callout a,.danger-callout a,.ok-callout a{text-decoration-thickness:1px;text-underline-offset:3px}
+.card{background:var(--grey-solid);border-radius:var(--r-lg);padding:26px}
 .card p+p{margin-top:8px}
 .stack>*+*{margin-top:16px}
+h3.sub{font-size:1.35rem;font-weight:600;letter-spacing:-.03em;margin:34px 0 14px}
 
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
-.grid .c-name{font-weight:800;margin-bottom:8px;font-size:.96rem}
-.grid p:not(.c-name){color:var(--muted);font-size:.88rem;line-height:1.6}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.grid .c-name{font-weight:700;margin-bottom:8px;font-size:1rem;letter-spacing:-.02em}
+.grid p:not(.c-name){color:var(--muted);font-size:.9rem;line-height:1.6}
+.grid .card a{color:var(--ink)}
 
-.stat{text-align:center}
-.stat b{display:block;font-size:clamp(1.6rem,3.5vw,2.3rem);font-weight:900;color:var(--indigo-dk);letter-spacing:-1px}
-.stat span{color:var(--muted);font-size:.85rem}
+.stat{text-align:left}
+.stat b{display:block;font-size:clamp(2rem,4.4vw,3rem);font-weight:600;letter-spacing:-.05em;line-height:1}
+.stat span{display:block;margin-top:10px;color:var(--muted);font-size:.88rem}
 
-.note-callout{background:var(--indigo-lt);border:1px solid #c7d2fe;border-radius:14px;padding:16px 20px;margin-top:18px}
-.note-callout p{color:var(--indigo-dk);font-size:.93rem;line-height:1.7}
-.warn-callout{background:var(--amber-lt);border:1px solid #fcd34d;border-radius:16px;padding:18px 22px;margin-top:18px}
-.warn-callout p{color:#78350f;line-height:1.7;font-size:.93rem}
-.danger-callout{background:var(--red-lt);border:1px solid #fecaca;border-radius:16px;padding:18px 22px;margin-top:18px}
-.danger-callout p{color:#7f1d1d;line-height:1.7;font-size:.93rem}
-.ok-callout{background:var(--green-lt);border:1px solid #bbf7d0;border-radius:16px;padding:18px 22px;margin-top:18px}
-.ok-callout p{color:#14532d;line-height:1.7;font-size:.93rem}
-.callout strong,.note-callout strong,.warn-callout strong,.danger-callout strong,.ok-callout strong{display:block;margin-bottom:2px}
+.note-callout,.warn-callout,.danger-callout,.ok-callout{border-radius:var(--r-md);padding:20px 24px;margin-top:18px}
+.note-callout{background:var(--blue-lt)}
+.warn-callout{background:var(--orange-lt)}
+.danger-callout{background:var(--red-lt)}
+.ok-callout{background:var(--green-lt)}
+.note-callout p,.warn-callout p,.danger-callout p,.ok-callout p{font-size:.94rem;line-height:1.7;font-weight:500}
+.note-callout strong,.warn-callout strong,.danger-callout strong,.ok-callout strong{display:block;margin-bottom:3px;font-weight:700;letter-spacing:-.02em}
 
-table{width:100%;border-collapse:collapse;font-size:.9rem;background:var(--card);border-radius:14px;overflow:hidden;border:1px solid var(--border)}
-th,td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--border);vertical-align:top}
-th{background:#f8fafc;font-size:.75rem;text-transform:uppercase;letter-spacing:.6px;color:var(--muted)}
+table{width:100%;border-collapse:separate;border-spacing:0;font-size:.9rem;background:var(--grey-solid);border-radius:var(--r-md);overflow:hidden}
+th,td{padding:12px 16px;text-align:left;border-bottom:1px solid var(--grey-2);vertical-align:top}
+th{font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:700}
 tr:last-child td{border-bottom:none}
-.tbl-wrap{overflow-x:auto}
+.tbl-wrap{overflow-x:auto;border-radius:var(--r-md)}
 
-.steps{list-style:none;counter-reset:st;display:flex;flex-direction:column;gap:12px}
-.steps li{counter-increment:st;position:relative;padding:14px 16px 14px 56px;background:var(--card);border:1px solid var(--border);border-radius:14px}
-.steps li::before{content:counter(st);position:absolute;left:14px;top:12px;width:30px;height:30px;border-radius:50%;background:var(--indigo);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center}
+.steps{list-style:none;counter-reset:st;display:flex;flex-direction:column;gap:10px}
+.steps li{counter-increment:st;position:relative;padding:18px 20px 18px 66px;background:var(--grey-solid);border-radius:var(--r-md)}
+.steps li::before{content:counter(st);position:absolute;left:18px;top:16px;width:32px;height:32px;border-radius:50%;background:var(--ink);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;font-size:.9rem}
 .dosdonts{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
-.dosdonts ul{list-style:none;display:flex;flex-direction:column;gap:8px;font-size:.92rem}
-.dosdonts li{padding-left:24px;position:relative}
-.yes li::before{content:"✓";position:absolute;left:0;color:var(--green);font-weight:900}
-.no li::before{content:"✕";position:absolute;left:0;color:var(--red);font-weight:900}
-code{background:#eef2ff;color:var(--indigo-dk);padding:1px 6px;border-radius:5px;font-size:.88em}
-.tree{background:#0f172a;color:#e2e8f0;border-radius:14px;padding:18px 20px;font-family:Consolas,monospace;font-size:.85rem;line-height:1.7;overflow-x:auto;white-space:pre}
+.dosdonts ul{list-style:none;display:flex;flex-direction:column;gap:9px;font-size:.93rem}
+.dosdonts li{padding-left:26px;position:relative}
+.yes li::before{content:"✓";position:absolute;left:0;color:var(--green);font-weight:800}
+.no li::before{content:"✕";position:absolute;left:0;color:var(--red);font-weight:800}
+code{background:rgba(128,126,125,.16);padding:1px 7px;border-radius:8px;font-size:.86em;font-family:Consolas,"SF Mono",monospace}
+.tree{background:var(--ink);color:#f3f2f1;border-radius:var(--r-md);padding:22px 24px;font-family:Consolas,monospace;font-size:.85rem;line-height:1.7;overflow-x:auto;white-space:pre}
 
-.prompt-box{background:#0f172a;border-radius:14px;overflow:hidden;margin-top:16px}
-.prompt-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 16px;background:#1e293b;color:#e2e8f0;font-size:.82rem;font-weight:700}
-.copy-btn{padding:5px 12px;border-radius:8px;border:1px solid #475569;background:transparent;color:#e2e8f0;font-size:.76rem;font-weight:700;cursor:pointer;flex-shrink:0}
-.copy-btn:hover{background:#334155}
-.prompt-box pre{margin:0;padding:18px 16px;color:#e2e8f0;font-size:.82rem;line-height:1.6;overflow-x:auto;white-space:pre-wrap;word-break:break-word;font-family:Consolas,monospace}
+.prompt-box{background:var(--ink);border-radius:var(--r-md);overflow:hidden;margin-top:16px}
+.prompt-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px 12px 20px;color:#f3f2f1;font-size:.82rem;font-weight:600}
+.copy-btn{padding:7px 16px;border-radius:var(--r-pill);border:none;background:var(--orange);color:#fff;font-size:.78rem;font-weight:700;cursor:pointer;flex-shrink:0;font-family:inherit}
+.copy-btn:hover{background:var(--orange-dk)}
+.prompt-box pre{margin:0;padding:6px 20px 22px;color:#e9e7e5;font-size:.82rem;line-height:1.65;overflow-x:auto;white-space:pre-wrap;word-break:break-word;font-family:Consolas,"SF Mono",monospace}
 
-.checklist-progress-bar{height:10px;border-radius:100px;background:var(--indigo-lt);overflow:hidden;margin-bottom:20px}
-.checklist-progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--indigo),var(--cyan));border-radius:100px;transition:width .3s ease}
-.checklist-items{list-style:none;display:flex;flex-direction:column;gap:12px}
-.checklist-items label{display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:.95rem}
-.checklist-items input{width:18px;height:18px;margin-top:3px;accent-color:var(--indigo);cursor:pointer;flex-shrink:0}
-.checklist-done{margin-top:18px;padding:12px 16px;background:var(--green-lt);color:var(--green);border-radius:10px;font-weight:700}
+/* РЕПОЗИТОРИИ */
+.repos{display:flex;flex-direction:column;gap:18px}
+.repo{background:var(--grey-solid);border-radius:var(--r-lg);padding:28px}
+.repo-top{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;margin-bottom:12px}
+.repo-top h3{font-size:1.5rem;font-weight:600;letter-spacing:-.035em;margin-right:6px}
+.repo-top h3 a{text-decoration:none}
+.repo-top h3 a:hover{text-decoration:underline}
+.pill{display:inline-block;padding:4px 12px;border-radius:var(--r-pill);background:var(--grey);font-size:.74rem;font-weight:700;color:#3a3837}
+.pill.v-ok{background:var(--green-lt);color:#14683a}
+.pill.v-try{background:var(--orange-lt);color:#9a4a00}
+.pill.v-skip{background:var(--red-lt);color:#a1261c}
+.repo .what{font-size:.98rem;margin-bottom:14px;max-width:820px}
+.pm{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-bottom:14px}
+.pm>div{background:#fff;border-radius:var(--r-md);padding:16px 18px;font-size:.88rem}
+.pm b{display:block;font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:6px}
+.pm ul{list-style:none;display:flex;flex-direction:column;gap:5px}
+.pm li{padding-left:16px;position:relative}
+.pm li::before{content:"•";position:absolute;left:2px;color:var(--orange)}
+.repo .for{font-size:.9rem;color:var(--muted);margin-bottom:6px}
+.repo .verdict-line{font-size:.94rem;margin-bottom:6px}
 
-.quiz{display:flex;flex-direction:column;gap:18px}
-.quiz-question{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px 22px}
-.quiz-text{font-weight:700;margin-bottom:12px}
-.quiz-options{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
-.quiz-options label{display:flex;align-items:flex-start;gap:8px;font-size:.92rem;cursor:pointer}
-.quiz-options label.quiz-correct-answer{color:var(--green);font-weight:700}
-.quiz-options input{accent-color:var(--indigo);margin-top:5px}
-.quiz-check{padding:8px 16px;border-radius:9px;border:none;background:var(--indigo);color:#fff;font-weight:700;font-size:.82rem;cursor:pointer}
-.quiz-check:hover{background:var(--indigo-dk)}
-.quiz-check:disabled{opacity:.5;cursor:default}
-.quiz-feedback{margin-top:12px;padding:10px 14px;border-radius:8px;font-size:.9rem}
-.quiz-feedback.correct{background:var(--green-lt);color:var(--green)}
-.quiz-feedback.incorrect{background:var(--red-lt);color:var(--red)}
-.quiz-score-box{text-align:center;font-weight:800;color:var(--indigo-dk)}
+/* ЧЕК-ЛИСТ */
+.checklist-progress-bar{height:10px;border-radius:var(--r-pill);background:var(--grey-2);overflow:hidden;margin-bottom:22px}
+.checklist-progress-fill{height:100%;width:0%;background:var(--orange);border-radius:var(--r-pill);transition:width .3s ease}
+.checklist-items{list-style:none;display:flex;flex-direction:column;gap:13px}
+.checklist-items label{display:flex;align-items:flex-start;gap:12px;cursor:pointer;font-size:.96rem}
+.checklist-items input{width:20px;height:20px;margin-top:3px;accent-color:var(--orange);cursor:pointer;flex-shrink:0}
+.checklist-done{margin-top:20px;padding:14px 18px;background:var(--green-lt);color:#14683a;border-radius:var(--r-md);font-weight:700}
 
-.conclusion-list{list-style:none;counter-reset:concl;display:flex;flex-direction:column;gap:14px;margin-bottom:28px}
-.conclusion-list li{counter-increment:concl;padding-left:38px;position:relative;font-size:1rem}
-.conclusion-list li::before{content:counter(concl);position:absolute;left:0;top:-2px;width:26px;height:26px;border-radius:50%;background:var(--indigo);color:#fff;font-size:.8rem;font-weight:800;display:flex;align-items:center;justify-content:center}
-.verdict{margin-top:14px;font-weight:700;color:var(--indigo-dk)}
-.svc-link{color:var(--indigo);font-weight:700;text-decoration:underline;text-underline-offset:2px}
+/* КВИЗ */
+.quiz{display:flex;flex-direction:column;gap:14px}
+.quiz-question{background:var(--grey-solid);border-radius:var(--r-lg);padding:24px 26px}
+.quiz-text{font-weight:700;margin-bottom:14px;letter-spacing:-.02em}
+.quiz-options{display:flex;flex-direction:column;gap:10px;margin-bottom:16px}
+.quiz-options label{display:flex;align-items:flex-start;gap:10px;font-size:.94rem;cursor:pointer;padding:10px 14px;background:#fff;border-radius:16px}
+.quiz-options label.quiz-correct-answer{background:var(--green-lt);color:#14683a;font-weight:700}
+.quiz-options input{accent-color:var(--orange);margin-top:5px}
+.quiz-check,.btn{padding:10px 22px;border-radius:var(--r-pill);border:none;background:var(--ink);color:#fff;font-weight:700;font-size:.85rem;cursor:pointer;font-family:inherit;text-decoration:none;display:inline-block}
+.quiz-check:hover,.btn:hover{background:#2a2928}
+.quiz-check:disabled{opacity:.45;cursor:default}
+.quiz-feedback{margin-top:14px;padding:12px 16px;border-radius:16px;font-size:.92rem}
+.quiz-feedback.correct{background:var(--green-lt);color:#14683a}
+.quiz-feedback.incorrect{background:var(--red-lt);color:#a1261c}
+.quiz-score-box{text-align:center;font-weight:700}
+
+.conclusion-list{list-style:none;counter-reset:concl;display:flex;flex-direction:column;gap:16px;margin-bottom:28px}
+.conclusion-list li{counter-increment:concl;padding-left:46px;position:relative;font-size:1.02rem}
+.conclusion-list li::before{content:counter(concl);position:absolute;left:0;top:-3px;width:32px;height:32px;border-radius:50%;background:var(--orange);color:#fff;font-size:.85rem;font-weight:700;display:flex;align-items:center;justify-content:center}
+.verdict{margin-top:16px;font-weight:700;letter-spacing:-.02em}
+.svc-link{font-weight:700;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
 
 .fade{opacity:0;transform:translateY(18px);transition:opacity .55s ease,transform .55s ease}
 .fade.in{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){.fade{opacity:1;transform:none;transition:none}}
-@media (max-width:900px){.sec{padding:48px 16px}}
-footer{text-align:center;padding:32px 20px 48px;color:var(--muted);font-size:.85rem;max-width:800px;margin:0 auto}
+@media (max-width:900px){.sec{padding:44px 16px}.part{padding:44px 16px 0}.repo{padding:22px 18px}}
+footer{text-align:center;padding:48px 20px 56px;color:var(--muted);font-size:.85rem;max-width:760px;margin:0 auto}
 footer p+p{margin-top:8px}
+footer a{color:var(--ink);font-weight:700}
 </style>
 </head>
 <body>
 
 <nav class="top" aria-label="Навигация по странице">
-  <span class="nav-logo">Не потерять аккаунт</span>
+  <span class="nav-logo">Безопасная работа с ИИ</span>
   <span class="nav-sep"></span>
-  <a class="nav-link" href="#s1">Картина</a>
-  <a class="nav-link" href="#s2">Правила</a>
-  <a class="nav-link" href="#s3">За что банят</a>
-  <a class="nav-link" href="#s4">Привычки</a>
-  <a class="nav-link" href="#s5">Копии</a>
+  <a class="nav-link" href="#s1">Аккаунт</a>
   <a class="nav-link" href="#s6">Умная папка</a>
   <a class="nav-link" href="#s7">Если бан</a>
-  <a class="nav-link" href="#s8">По ключу</a>
-  <a class="nav-link" href="#s9">Codex</a>
+  <a class="nav-link" href="#s10">Взломы и защита</a>
+  <a class="nav-link" href="#s11">В жизни</a>
+  <a class="nav-link" href="#s12">GitHub</a>
+  <a class="nav-link" href="#s13">Репозитории</a>
   <a class="nav-link" href="#checklist">Чек-лист</a>
   <a class="nav-link" href="#quiz">Квиз</a>
 </nav>
@@ -160,21 +188,23 @@ footer p+p{margin-top:8px}
   <div class="hero-badges">
     <span class="hero-badge">Учебная страница</span>
     <span class="hero-badge">Claude · Claude Code · Codex</span>
-    <span class="hero-badge">~25 минут</span>
+    <span class="hero-badge">4 части · ~60 минут</span>
   </div>
-  <h1 class="hero-title">Как не потерять <em>аккаунт</em> — и тем более работу</h1>
-  <p class="hero-sub">Аккаунт в облачном ИИ — это арендованная комната. Работа, контекст и решения должны жить у вас на диске. Здесь собраны главные тезисы, пошаговая инструкция и сценарий «что делать, если всё-таки заблокировали».</p>
+  <h1 class="hero-title">Не потерять <em>аккаунт</em>, проекты и ключи</h1>
+  <p class="hero-sub">Четыре части: как сберечь аккаунт и контекст, как не отдать проекты взломщикам, как работать с GitHub вместе с Claude Code и какие репозитории октября стоит ставить, пробовать или обходить.</p>
   <nav class="hero-nav" aria-label="Разделы страницы">
-    <a href="#s1">Цифры</a>
-    <a href="#s3">Причины блокировок</a>
-    <a href="#s5">Копии и экспорт</a>
+    <a class="cta" href="#s10">Защита проектов: пошагово</a>
+    <a href="#s1">Аккаунт</a>
     <a href="#s6">Умная папка</a>
-    <a href="#s7">План на первые сутки</a>
+    <a href="#s12">GitHub для Claude Code</a>
+    <a href="#s13">11 репозиториев</a>
     <a href="#quiz">Проверить себя</a>
   </nav>
 </header>
 
 <main>
+
+<div class="part fade"><span>Часть I</span><h2>Аккаунт и контекст</h2><p>Правила, причины блокировок, копии и «умная папка», план первых суток.</p></div>
 
 <!-- ══════════ 1: КАРТИНА ══════════ -->
 <section class="sec" id="s1">
@@ -576,6 +606,524 @@ Thank you.</pre>
   <p class="verdict fade">Цены и лимиты быстро устаревают — проверяйте их на официальных страницах перед покупкой.</p>
 </section>
 
+
+<div class="part fade"><span>Часть II</span><h2>Защита проектов от взломов</h2><p>Неделя 14–21 октября 2026 принесла уязвимости в PHP, Node.js, NGINX, Go, GitLab и в списках сертификатов. Здесь — что проверить и что сделать, по шагам.</p></div>
+
+<!-- ══════════ 10: ВЗЛОМЫ ══════════ -->
+<section class="sec" id="s10">
+  <div class="sec-head fade">
+    <div class="num-badge">10</div>
+    <h2 class="sec-title">Взломы недели: что делать со своими проектами</h2>
+    <p class="sec-desc">Потерять можно не только аккаунт, но и сайт, сервер и платёжные ключи. Если вы ведёте свой проект или проект заказчика, достаточно семи шагов. Ниже они разложены от самого срочного к постоянным привычкам.</p>
+  </div>
+
+  <div class="note-callout fade" style="margin-top:0">
+    <p><strong>Откуда цифры</strong>Номера версий, названия утилит и команды в этой части взяты из присланного разбора («Взломан PHP, Node.js, NGINX, Go и GitLab. Часть вторая»). Я не проверял их по бюллетеням производителей. Перед обновлением сверьтесь с официальными объявлениями вашего дистрибутива и проекта.</p>
+  </div>
+
+  <h3 class="sub fade">Шаг 1. Проверьте версии</h3>
+  <p class="sec-desc fade" style="margin-bottom:14px">Выполните команды на сервере. Если ваша версия ниже указанной, её нужно обновить.</p>
+  <div class="tbl-wrap fade">
+    <table>
+      <thead><tr><th>Что</th><th>Команда</th><th>Безопасные версии</th><th>Если у вас старее</th></tr></thead>
+      <tbody>
+        <tr><td>PHP</td><td><code>php -v</code></td><td>8.2.35, 8.3.36, 8.4.27 или 8.5.12</td><td>На 8.1 и старше исправлений не будет: переезжайте на 8.4 или 8.5</td></tr>
+        <tr><td>Node.js</td><td><code>node -v</code></td><td>22.23.4, 24.22.1 или 26.12.1</td><td>Ветки 20 и 25 больше не обновляют: переходите на 24</td></tr>
+        <tr><td>NGINX</td><td><code>nginx -v</code></td><td>1.30.6 или 1.31.7</td><td>Обновите пакет или образ</td></tr>
+        <tr><td>Go</td><td><code>go version</code></td><td>1.26.10 или 1.27.3</td><td>Обновите и пересоберите свои программы</td></tr>
+        <tr><td>GitLab на своём сервере</td><td>страница «Help» или админка</td><td>Патч вашей ветки от 21 октября, например 19.5.1</td><td>Обновить сегодня</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="warn-callout fade">
+    <p><strong>Особенности PHP</strong>Для PHP есть готовая проверка <code>php2shell-checker</code>, запуск <code>node phpcheck.js --local</code> (по материалу). Репозиторий найдите сами и прочитайте код до запуска: утилита из сети тоже может быть опасной. Debian и Ubuntu латают PHP без смены номера версии, поэтому сверяйте пакет с бюллетенем дистрибутива, а не только вывод <code>php -v</code>.</p>
+  </div>
+
+  <h3 class="sub fade">Шаг 2. Если PHP прямо сейчас не обновить</h3>
+  <div class="card fade">
+    <p>В <code>php.ini</code> или в настройках пула PHP-FPM поставьте <code>session.upload_progress.enabled = 0</code> и перезапустите все процессы PHP. Через <code>.user.ini</code> и <code>ini_set</code> это не работает. На PHP 8.5 добавьте <code>fatal_error_backtraces = 0</code>.</p>
+  </div>
+  <div class="danger-callout fade">
+    <p><strong>Это временная мера</strong>Так закрывается подтверждённый путь атаки, но не все варианты. Безопасно только обновление.</p>
+  </div>
+
+  <h3 class="sub fade">Шаг 3. Сертификаты</h3>
+  <div class="card fade">
+    <p>Проверьте, не доверяет ли ваша система поддельному сертификату. Тестовый адрес из материала:</p>
+    <p><code>curl https://dv-g3b-emudhra.we-have-a-problem.com/</code></p>
+    <p>Если вы видите ошибку вида <code>curl: (60) SSL certificate problem</code>, вы защищены. Если напечатался текст страницы, обновляйтесь. Команда только читает ответ и ничего не устанавливает.</p>
+  </div>
+  <div class="tbl-wrap fade" style="margin-top:14px">
+    <table>
+      <thead><tr><th>Где</th><th>Что сделать</th></tr></thead>
+      <tbody>
+        <tr><td>Linux</td><td>обновить пакет <code>ca-certificates</code></td></tr>
+        <tr><td>Python</td><td><code>pip install -U certifi</code> в каждом окружении; нужна версия 2026.10.19 или новее; проверка: <code>pip show certifi</code></td></tr>
+        <tr><td>Node.js и Go</td><td>версии из шага 1</td></tr>
+        <tr><td>Java</td><td>обновление от 21 октября</td></tr>
+        <tr><td>Docker</td><td><code>docker build --pull --no-cache</code>: иначе образ соберётся из кэша со старым списком сертификатов</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="sub fade">Шаг 4. Ключи и лимиты трат</h3>
+  <div class="grid fade">
+    <div class="card"><p class="c-name">Ключи в OpenCode Console</p><p>Если вы сохраняли там ключи OpenAI, Anthropic или Google: удалите их в кабинете провайдера, выпустите новые и посмотрите расход за последние дни.</p></div>
+    <div class="card"><p class="c-name">Лимит трат</p><p>У Anthropic лимит ставится на воркспейс, а в воркспейсе Default его поставить нельзя. Заведите отдельный воркспейс со своим ключом и лимитом на каждый внешний сервис. Без лимита, по материалу, бывает и 1700 долларов за ночь.</p></div>
+    <div class="card"><p class="c-name">TiDB Cloud</p><p>Если пользуетесь, замените ключи API, как просит PingCAP.</p></div>
+    <div class="card"><p class="c-name">Ключ в истории git</p><p><code>gitleaks git</code> находит ключи в истории репозитория. Удалённый из кода ключ остаётся в истории, поэтому его надо менять, а не просто стирать.</p></div>
+  </div>
+
+  <h3 class="sub fade">Шаг 5. Отдайте проверку агенту</h3>
+  <p class="sec-desc fade">Промпт одинаков для Claude Code и Codex. Запускайте его в папке проекта или на сервере. В Codex на вопросы про сеть отвечайте «Разрешить». Агент должен только составить отчёт.</p>
+  <div class="prompt-box fade">
+    <div class="prompt-head"><span>Промпт: проверить проект и сервер (только отчёт)</span><button type="button" class="copy-btn" data-copy="p-sec">Копировать</button></div>
+    <pre id="p-sec">Проверь этот проект и сервер на уязвимости 14–21 октября 2026 года. Найди версии PHP, Node.js, NGINX, Go, Java и GitLab, если он есть. Сравни с безопасными: PHP 8.2.35 / 8.3.36 / 8.4.27 / 8.5.12, Node 22.23.4 / 24.22.1 / 26.12.1, NGINX 1.30.6 / 1.31.7, Go 1.26.10 / 1.27.3, Java и GitLab — выпуски от 21 октября 2026 или новее. Покажи таблицу: что нашёл, чем опасно, что обновить и в каком порядке. Ничего не обновляй, не перезапускай и не меняй. Только отчёт.</pre>
+  </div>
+  <div class="ok-callout fade">
+    <p><strong>Обновляйте по одному пункту</strong>Просите агента обновлять по одному компоненту за раз и после каждого проверяйте, что сайт работает. Так вы сразу увидите, какое обновление что-то сломало.</p>
+  </div>
+
+  <h3 class="sub fade">Шаг 6. Проверьте сам код</h3>
+  <div class="tbl-wrap fade">
+    <table>
+      <thead><tr><th>Инструмент</th><th>Как запустить</th><th>Условия</th></tr></thead>
+      <tbody>
+        <tr><td>Claude Code</td><td><code>/plugin install claude-security@claude-plugins-official</code>, затем <code>/claude-security</code></td><td>Нужен платный тариф; на Pro включите Dynamic workflows в <code>/config</code></td></tr>
+        <tr><td>Codex</td><td><code>npm install -g @openai/codex-security</code>, затем <code>cs login</code> и <code>cs scan .</code></td><td>Аккаунт Codex</td></tr>
+        <tr><td>Другие агенты</td><td>навык <code>security-audit</code> от Cloudflare</td><td>Совместимый с навыками агент</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="sub fade">Шаг 7. Сделайте один раз и повторяйте</h3>
+  <ol class="steps fade">
+    <li>Включите <b>Dependabot</b> на GitHub: он сам откроет pull request, когда в зависимостях найдут уязвимость.</li>
+    <li>Раз в неделю запускайте промпт из шага 5.</li>
+  </ol>
+  <div class="warn-callout fade">
+    <p><strong>Почему это надолго</strong>ИИ находит уязвимости, которые годами были скрыты, поэтому подобные недели будут повторяться. Следить за безопасностью своих проектов теперь нужно регулярно, а не после новостей.</p>
+  </div>
+</section>
+
+<!-- ══════════ 11: В ЖИЗНИ ══════════ -->
+<section class="sec" id="s11">
+  <div class="sec-head fade">
+    <div class="num-badge">11</div>
+    <h2 class="sec-title">Как применять это в жизни</h2>
+    <p class="sec-desc">Те же принципы работают и дома, и в небольшой компании: узнать, что у вас стоит, закрыть самое срочное, ограничить возможный ущерб, держать копии и проверять их.</p>
+  </div>
+  <div class="grid fade">
+    <div class="card"><p class="c-name">1. Знайте, что у вас стоит</p><p>Составьте список: сайты, серверы, платные сервисы, ключи API. Против каждого запишите версию и дату последней проверки. Что не записано, то не обновляется.</p></div>
+    <div class="card"><p class="c-name">2. Ограничивайте ущерб заранее</p><p>Отдельный ключ на каждый сервис, лимит трат, права «только чтение», где этого хватает. Утечка одного ключа не должна опустошить всё.</p></div>
+    <div class="card"><p class="c-name">3. Включите вход без пароля</p><p>Для почты, GitHub и облачных кабинетов включите ключи доступа (passkey) или двухфакторную защиту. Пароли держите в менеджере паролей, по уникальному на сервис.</p></div>
+    <div class="card"><p class="c-name">4. Обновляйте по плану</p><p>Раз в неделю 15 минут: проверка версий, обновление по одному пункту, проверка сайта. Автообновления включайте там, где поломка не критична.</p></div>
+    <div class="card"><p class="c-name">5. Не доверяйте чужим установщикам</p><p>Строки «вставь в терминал» и неизвестные утилиты читайте до запуска. Ставьте фиксированную версию, а не «последнюю».</p></div>
+    <div class="card"><p class="c-name">6. Проверяйте копии</p><p>Копия, которую ни разу не восстанавливали, это надежда. Раз в месяц восстановите что-нибудь из копии на чистом месте.</p></div>
+  </div>
+  <div class="dosdonts fade" style="margin-top:14px">
+    <div class="card yes"><p class="c-name" style="font-weight:700;margin-bottom:10px">Делайте</p>
+      <ul>
+        <li>Меняйте ключ, если он хоть раз попал в чат, скриншот или репозиторий</li>
+        <li>Просите агента сначала составить отчёт, а потом менять по одному пункту</li>
+        <li>Подписывайтесь на уведомления безопасности тех продуктов, что вы используете</li>
+        <li>Храните ключи в переменных окружения или менеджере секретов</li>
+        <li>Разделяйте рабочие и личные аккаунты</li>
+      </ul>
+    </div>
+    <div class="card no"><p class="c-name" style="font-weight:700;margin-bottom:10px">Не делайте</p>
+      <ul>
+        <li>Не публикуйте файл <code>.env</code> и не вставляйте ключи в код</li>
+        <li>Не запускайте найденные в сети команды, не прочитав их</li>
+        <li>Не используйте один ключ на все сервисы</li>
+        <li>Не откладывайте обновление «на потом», если версия вышла из поддержки</li>
+        <li>Не давайте агенту права на всё сразу: сначала отчёт, потом действие</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="part fade"><span>Часть III</span><h2>GitHub как сейф и витрина</h2><p>Основы, которые нужны, чтобы с Claude Code копировать чужие репозитории, сохранять свои, публиковать сайты и не светить секреты.</p></div>
+
+<!-- ══════════ 12: GITHUB ══════════ -->
+<section class="sec" id="s12">
+  <div class="sec-head fade">
+    <div class="num-badge">12</div>
+    <h2 class="sec-title">GitHub: основы для работы с Claude Code</h2>
+    <p class="sec-desc"><a class="svc-link" href="https://github.com" target="_blank" rel="noopener">GitHub</a> хранит историю изменений проекта в облаке. Вместе с Claude Code он решает четыре задачи: взять чужой код, сохранить свой, опубликовать сайт и защититься от утечек. Это и есть «сейф» для вашей работы: если забанят аккаунт ИИ или умрёт диск, проект остаётся.</p>
+  </div>
+
+  <h3 class="sub fade">Словарь на одну минуту</h3>
+  <div class="grid fade">
+    <div class="card"><p class="c-name">Git и GitHub</p><p>Git — программа учёта версий на вашем компьютере. GitHub — сайт, где лежит удалённая копия репозитория.</p></div>
+    <div class="card"><p class="c-name">Репозиторий</p><p>Папка проекта вместе с историей всех изменений.</p></div>
+    <div class="card"><p class="c-name">Коммит</p><p>Сохранённая точка в истории с описанием «что и зачем».</p></div>
+    <div class="card"><p class="c-name">Клон и форк</p><p>Клон — копия репозитория на ваш диск. Форк — ваша копия чужого репозитория на GitHub.</p></div>
+    <div class="card"><p class="c-name">Ветка и pull request</p><p>Ветка — отдельная линия правок. Pull request — предложение влить её в основную после проверки.</p></div>
+    <div class="card"><p class="c-name">Public и private</p><p>Публичный репозиторий видит весь интернет. Приватный — только вы и те, кого вы пригласили.</p></div>
+  </div>
+
+  <h3 class="sub fade">Подготовка: один раз</h3>
+  <ol class="steps fade">
+    <li>Заведите аккаунт на GitHub и сразу включите двухфакторную защиту или ключ доступа (Settings → Password and authentication).</li>
+    <li>Поставьте <a class="svc-link" href="https://git-scm.com/downloads" target="_blank" rel="noopener">git</a> и <a class="svc-link" href="https://cli.github.com" target="_blank" rel="noopener">GitHub CLI</a> (<code>gh</code>).</li>
+    <li>Войдите через браузер: <code>gh auth login</code>. Токен ляжет в системное хранилище. Никогда не вставляйте токен в чат с агентом и в файлы проекта.</li>
+    <li>Задайте имя и почту для коммитов: <code>git config --global user.name "Имя"</code> и <code>git config --global user.email "почта"</code>.</li>
+  </ol>
+
+  <h3 class="sub fade">Сценарий 1. Скопировать чужой репозиторий безопасно</h3>
+  <div class="card fade">
+    <p>Чужой код — это программа, которую вы запустите с вашими правами. Поэтому сначала смотрим, потом ставим.</p>
+  </div>
+  <ol class="steps fade" style="margin-top:12px">
+    <li>Посмотрите карточку репозитория: лицензия, дата последнего коммита, число открытых ошибок, звёзды. Звёзды можно накрутить, живая история правок и разбор ошибок надёжнее.</li>
+    <li>Клонируйте нужную версию, а не «последнюю»: <code>git clone --branch ТЕГ --depth 1 https://github.com/автор/репозиторий.git</code>. Для простого клона: <code>gh repo clone автор/репозиторий</code>.</li>
+    <li>Прочитайте README и файлы запуска: <code>package.json</code> (раздел scripts, особенно <code>postinstall</code>), <code>Makefile</code>, <code>install.sh</code>.</li>
+    <li>Запускайте в отдельной папке или контейнере, без доступа к рабочим ключам и личным файлам.</li>
+  </ol>
+  <div class="prompt-box fade">
+    <div class="prompt-head"><span>Промпт для Claude Code: клонировать и сначала разобраться</span><button type="button" class="copy-btn" data-copy="p-clone">Копировать</button></div>
+    <pre id="p-clone">Склонируй репозиторий https://github.com/АВТОР/РЕПОЗИТОРИЙ в папку ~/Проверка/РЕПОЗИТОРИЙ, версию возьми по последнему тегу.
+Ничего не устанавливай и не запускай. Прочитай README, package.json (или аналог), скрипты установки и скажи:
+1) что делает проект, 2) какие команды он выполнит при установке, 3) куда пойдёт сеть и какие файлы он тронет,
+4) есть ли подозрительное (скачивание и запуск чужих скриптов, чтение ключей, отправка данных).
+Затем жди моего решения.</pre>
+  </div>
+
+  <h3 class="sub fade">Сценарий 2. Сохранить свою работу</h3>
+  <ol class="steps fade">
+    <li>В папке проекта: <code>git init -b main</code>.</li>
+    <li><b>До первого коммита</b> создайте файл <code>.gitignore</code> и впишите туда <code>.env</code>, <code>*.key</code>, <code>node_modules/</code>, папки с личными данными.</li>
+    <li>Сохраните версию: <code>git add -A</code>, затем <code>git commit -m "что и зачем"</code>.</li>
+    <li>Создайте <b>приватный</b> репозиторий и отправьте: <code>gh repo create имя --private --source . --push</code>.</li>
+    <li>В конце каждой рабочей сессии: коммит и <code>git push</code>. В «умной папке» из части I это записано в AGENTS.md и делается автоматически.</li>
+  </ol>
+  <div class="prompt-box fade">
+    <div class="prompt-head"><span>Промпт для Claude Code: сохранить папку в приватный репозиторий</span><button type="button" class="copy-btn" data-copy="p-save">Копировать</button></div>
+    <pre id="p-save">Возьми эту папку под контроль версий и сохрани её на GitHub.
+Порядок: 1) создай .gitignore с .env, ключами и служебными файлами и покажи его мне; 2) просмотри файлы и скажи, нет ли в них паролей, ключей и личных данных;
+3) только после моего «да» сделай первый коммит; 4) создай ПРИВАТНЫЙ репозиторий через gh и отправь код.
+Публичным ничего не делай без моего отдельного разрешения.</pre>
+  </div>
+
+  <h3 class="sub fade">Сценарий 3. Опубликовать сайт на GitHub Pages</h3>
+  <p class="sec-desc fade" style="margin-bottom:14px">Для статического сайта из <code>index.html</code> достаточно <b>GitHub Pages</b>: сервер не нужен, бесплатно, адрес вида <code>https://аккаунт.github.io/репозиторий/</code>.</p>
+  <ol class="steps fade">
+    <li><b>Проверьте, что публикуете.</b> Публичный репозиторий читают все, включая историю коммитов. Ни паролей, ни ключей, ни чужих персональных данных, ни чужих реквизитов.</li>
+    <li>Создайте публичный репозиторий и отправьте код: <code>gh repo create имя --public --source . --push</code>.</li>
+    <li>Включите Pages: <code>gh api -X POST repos/АККАУНТ/РЕПОЗИТОРИЙ/pages -f "source[branch]=main" -f "source[path]=/"</code>. Либо в браузере: Settings → Pages → ветка main, папка root.</li>
+    <li>Подождите минуту и откройте адрес. Статус сборки: <code>gh api repos/АККАУНТ/РЕПОЗИТОРИЙ/pages --jq .status</code> (building → built).</li>
+    <li>Обновление сайта: правка файла, коммит, <code>git push</code>. Страница обновится сама.</li>
+  </ol>
+  <div class="danger-callout fade">
+    <p><strong>Публикация необратима</strong>То, что хоть раз было в публичном репозитории, могли скопировать, сохранить в кэше поисковиков и форкнуть. Удаление репозитория это не отменяет. Если туда попал ключ, считайте его утёкшим и замените.</p>
+  </div>
+
+  <h3 class="sub fade">Безопасность GitHub: минимум</h3>
+  <div class="grid fade">
+    <div class="card"><p class="c-name">Двухфакторная защита</p><p>Включите на аккаунте и храните коды восстановления вне компьютера. Потеря GitHub равна потере доступа к проектам.</p></div>
+    <div class="card"><p class="c-name">Токены с минимумом прав</p><p>Если нужен токен, делайте fine-grained: один репозиторий, нужные права, срок действия. Не давайте агенту токен «на всё».</p></div>
+    <div class="card"><p class="c-name">Секреты в истории</p><p>Проверяйте историю через <code>gitleaks git</code> до публикации. Если ключ уже ушёл в репозиторий, его надо заменить, а не просто стереть.</p></div>
+    <div class="card"><p class="c-name">Push protection и Dependabot</p><p>В Settings → Code security включите секрет-сканирование с защитой от публикации секретов и уведомления Dependabot.</p></div>
+    <div class="card"><p class="c-name">Защита ветки</p><p>Для важных репозиториев включите защиту ветки main: правки только через pull request.</p></div>
+    <div class="card"><p class="c-name">Просмотр перед отправкой</p><p>Перед <code>git push</code> смотрите <code>git status</code> и <code>git diff --staged</code>. Попросите агента показать, что именно уйдёт наружу.</p></div>
+  </div>
+
+  <h3 class="sub fade">Шпаргалка команд</h3>
+  <div class="tbl-wrap fade">
+    <table>
+      <thead><tr><th>Задача</th><th>Команда</th></tr></thead>
+      <tbody>
+        <tr><td>Войти</td><td><code>gh auth login</code></td></tr>
+        <tr><td>Склонировать</td><td><code>gh repo clone автор/репозиторий</code></td></tr>
+        <tr><td>Что изменилось</td><td><code>git status</code> · <code>git diff</code></td></tr>
+        <tr><td>Сохранить версию</td><td><code>git add -A</code> · <code>git commit -m "что и зачем"</code></td></tr>
+        <tr><td>Отправить на GitHub</td><td><code>git push</code></td></tr>
+        <tr><td>Забрать обновления</td><td><code>git pull</code></td></tr>
+        <tr><td>Новый приватный репозиторий</td><td><code>gh repo create имя --private --source . --push</code></td></tr>
+        <tr><td>Журнал истории</td><td><code>git log --oneline -10</code></td></tr>
+        <tr><td>Вернуть файл</td><td><code>git restore путь/к/файлу</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="part fade"><span>Часть IV</span><h2>Репозитории октября</h2><p>Одиннадцать проектов для Claude Code и Codex: что под капотом, плюсы и минусы, кому подходят, как ставить и что я о них думаю.</p></div>
+
+<!-- ══════════ 13: РЕПОЗИТОРИИ ══════════ -->
+<section class="sec" id="s13">
+  <div class="sec-head fade">
+    <div class="num-badge">13</div>
+    <h2 class="sec-title">11 репозиториев: ставить, пробовать или обходить</h2>
+    <p class="sec-desc">Карточки составлены по README, лицензии и данным репозиториев на 23 октября 2026 (звёзды и число открытых обсуждений быстро меняются). Я их не запускал, поэтому вердикт — это оценка по описанию и рискам, а не по личному опыту. Установочные команды переписаны из README авторов: сверяйте их с актуальной версией.</p>
+  </div>
+
+  <div class="warn-callout fade" style="margin-top:0">
+    <p><strong>Как ставить чужое безопасно (общий порядок)</strong>1) Откройте репозиторий и прочитайте README и лицензию. 2) Посмотрите дату последнего коммита и открытые ошибки. 3) Ставьте конкретную версию (тег), а не «latest». 4) Не запускайте <code>curl … | sh</code> вслепую: сначала откройте скрипт и прочитайте. 5) Пробуйте в тестовой папке, без рабочих ключей, с отдельным ключом и лимитом трат. 6) Любой инструмент, который просит ключи или читает ваши диалоги, считайте точкой риска.</p>
+  </div>
+
+  <div class="repos" style="margin-top:18px">
+    <article class="repo fade">
+      <div class="repo-top">
+        <h3><a href="https://github.com/tt-a1i/archify" target="_blank" rel="noopener">1. archify</a></h3>
+        <span class="pill v-ok">Ставить</span>
+        <span class="pill">★ 87,9k</span>
+        <span class="pill">MIT</span>
+      </div>
+      <p class="what"><b>Что под капотом.</b> Навык для агента: вы описываете идею, план или репозиторий словами, агент собирает интерактивную HTML-страницу-схему (архитектура, маршрут, карта знаний), которую можно открыть и отправить дальше.</p>
+      <div class="pm">
+        <div><b>Плюсы</b><ul><li>Работает с Cursor, Claude Code, Codex CLI и OpenCode</li><li>Не требует репозитория: хватит описания</li><li>Результат — обычный HTML-файл, его легко хранить в «умной папке»</li><li>Лицензия MIT</li></ul></div>
+        <div><b>Минусы и риски</b><ul><li>Около 280 открытых обсуждений, проект молодой (с апреля 2026)</li><li>В README есть оговорка про сторонние платные сервисы: пользуйтесь только официальным репозиторием, остальное не требуется</li><li>Установка через <code>npx</code> тянет пакет из сети</li></ul></div>
+      </div>
+      <p class="for"><b>Кому подходит.</b> Тем, кому нужно быстро объяснить схему проекта или процесс.</p>
+      <div class="prompt-box">
+        <div class="prompt-head"><span>Установка (из README, проверьте перед запуском)</span><button type="button" class="copy-btn" data-copy="p-r1">Копировать</button></div>
+        <pre id="p-r1">npx skills add tt-a1i/archify -g</pre>
+      </div>
+      <p class="for" style="margin-top:10px">Затем попросите агента: «Use Archify to diagram …». Перед установкой откройте папку навыка в репозитории и просмотрите файлы инструкций.</p>
+    </article>
+
+    <article class="repo fade">
+      <div class="repo-top">
+        <h3><a href="https://github.com/stablyai/orca" target="_blank" rel="noopener">2. Orca</a></h3>
+        <span class="pill v-try">Попробовать</span>
+        <span class="pill">★ 103k</span>
+        <span class="pill">MIT</span>
+      </div>
+      <p class="what"><b>Что под капотом.</b> Настольное приложение-оркестратор: запускает Codex, Claude Code, OpenCode и других агентов параллельно, каждого в своём git-worktree (отдельная рабочая копия), и показывает всё в одном окне.</p>
+      <div class="pm">
+        <div><b>Плюсы</b><ul><li>Один запрос можно разослать нескольким агентам и сравнить результат</li><li>Терминалы, встроенный браузер, комментарии к diff</li><li>Мобильный клиент для уведомлений</li><li>Сборки под macOS, Windows и Linux</li></ul></div>
+        <div><b>Минусы и риски</b><ul><li>Около 8,6 тыс. открытых обсуждений: проект очень активный, но шумный</li><li>Приложение работает рядом с вашими входами в Claude и Codex: давайте ему только свои аккаунты</li><li>Переключатель аккаунтов удобен, но не используйте его для чужих аккаунтов — это нарушает правила сервисов</li></ul></div>
+      </div>
+      <p class="for"><b>Кому подходит.</b> Тем, кто часто гоняет задачи на нескольких агентах и устал от десятка терминалов.</p>
+      <div class="prompt-box">
+        <div class="prompt-head"><span>Установка (из README, проверьте перед запуском)</span><button type="button" class="copy-btn" data-copy="p-r2">Копировать</button></div>
+        <pre id="p-r2"># macOS (Homebrew)
+brew install --cask stablyai/orca/orca
+# Остальные: сборки на странице Releases
+# https://github.com/stablyai/orca/releases/latest</pre>
+      </div>
+      <p class="for" style="margin-top:10px">Скачивайте только с официальной страницы Releases или через Homebrew.</p>
+    </article>
+
+    <article class="repo fade">
+      <div class="repo-top">
+        <h3><a href="https://github.com/diegosouzapw/OmniRoute" target="_blank" rel="noopener">3. OmniRoute</a></h3>
+        <span class="pill v-skip">Обойти</span>
+        <span class="pill">★ 80k</span>
+        <span class="pill">MIT</span>
+      </div>
+      <p class="what"><b>Что под капотом.</b> Локальный шлюз: один адрес вместо многих провайдеров. Вы подключаете аккаунты, шлюз распределяет запросы между ними, включая бесплатные тарифы (в README заявлено около 375 провайдеров).</p>
+      <div class="pm">
+        <div><b>Плюсы</b><ul><li>Единая точка входа для нескольких моделей</li><li>Есть панель, Docker и npm-установка</li><li>Попытка экономить токены</li></ul></div>
+        <div><b>Минусы и риски</b><ul><li>Шлюз хранит все ваши ключи и аккаунты сразу: утечка бьёт по всем</li><li>Идея «складывать бесплатные тарифы» может нарушать условия отдельных провайдеров — проверьте их правила, прежде чем пользоваться</li><li>README на 1700 строк с рекламой, спонсорами и сообществами; при установке могут запускаться скрипты (postinstall)</li><li>Репозиторий переехал в организацию cheaper-inference: проверьте, что клонируете оригинал</li></ul></div>
+      </div>
+      <p class="for"><b>Кому подходит.</b> Опытным пользователям, которым нужен локальный прокси с несколькими моделями и которые готовы изолировать его (Docker, отдельные ключи с лимитами).</p>
+      <div class="prompt-box">
+        <div class="prompt-head"><span>Установка (из README, проверьте перед запуском)</span><button type="button" class="copy-btn" data-copy="p-r3">Копировать</button></div>
+        <pre id="p-r3"># Только если всё же решили попробовать — лучше в Docker, с отдельными ключами и лимитом:
+npm install -g omniroute
+omniroute</pre>
+      </div>
+      <p class="for" style="margin-top:10px">Это команды из README. Для основной работы с подписками и ключами я бы эту идею не использовал.</p>
+    </article>
+
+    <article class="repo fade">
+      <div class="repo-top">
+        <h3><a href="https://github.com/herdrdev/herdr" target="_blank" rel="noopener">4. herdr</a></h3>
+        <span class="pill v-try">Попробовать</span>
+        <span class="pill">★ 45,4k</span>
+        <span class="pill">Apache-2.0</span>
+      </div>
+      <p class="what"><b>Что под капотом.</b> Один бинарный файл на Rust: терминальный «мультиплексор» для агентов. Агенты живут в фоновом сервере, их можно отключить и подключить снова, даже после обрыва SSH. Помечает каждую панель как working, blocked или idle.</p>
+      <div class="pm">
+        <div><b>Плюсы</b><ul><li>Не нужен Electron: работает в обычном терминале</li><li>Показывает, какой агент остановился и ждёт ответа</li><li>Работает с Claude Code, Codex и другими</li><li>Лицензия Apache-2.0</li></ul></div>
+        <div><b>Минусы и риски</b><ul><li>Проект с марта 2026, около 420 открытых обсуждений</li><li>Основной способ установки — <code>curl … | sh</code>: сначала прочитайте скрипт</li><li>Нужна привычка к клавишам в духе tmux</li></ul></div>
+      </div>
+      <p class="for"><b>Кому подходит.</b> Тем, кто работает на удалённой машине или держит несколько агентов одновременно.</p>
+      <div class="prompt-box">
+        <div class="prompt-head"><span>Установка (из README, проверьте перед запуском)</span><button type="button" class="copy-btn" data-copy="p-r4">Копировать</button></div>
+        <pre id="p-r4"># Предпочтительно через менеджер пакетов:
+brew install herdr
+# Если берёте скрипт — сначала откройте и прочитайте:
+# https://herdr.dev/install.sh
+herdr</pre>
+      </div>
+      <p class="for" style="margin-top:10px">Отключиться: Ctrl+B, затем Q. Подключиться снова: команда herdr.</p>
+    </article>
+
+    <article class="repo fade">
+      <div class="repo-top">
+        <h3><a href="https://github.com/mvschwarz/openrig" target="_blank" rel="noopener">5. OpenRig</a></h3>
+        <span class="pill v-skip">Обойти пока</span>
+        <span class="pill">★ 8,1k</span>
+        <span class="pill">Apache-2.0</span>
+      </div>
+      <p class="what"><b>Что под капотом.</b> Команда агентов, описанная в YAML: Claude Code и Codex работают в одной «установке» (rig), управляются как одна система, поверх tmux.</p>
+      <div class="pm">
+        <div><b>Плюсы</b><ul><li>Идея постоянной команды агентов с ролями</li><li>Один YAML описывает команду</li><li>Установка через навык, который сначала сообщает, что изменит</li></ul></div>
+        <div><b>Минусы и риски</b><ul><li>Для начинающих это слишком сложно: нужны Node 22/24, tmux, macOS или Linux (на Windows через WSL2)</li><li>Команда <code>rig setup</code> меняет <code>~/.tmux.conf</code> и может ставить tmux и herdr</li><li>Нужен вход в Claude Code или Codex: проект получает доступ к рабочему окружению</li></ul></div>
+      </div>
+      <p class="for"><b>Кому подходит.</b> Тем, кто уже ведёт трёх и более агентов и хочет оформить это в систему.</p>
+      <div class="prompt-box">
+        <div class="prompt-head"><span>Установка (из README, проверьте перед запуском)</span><button type="button" class="copy-btn" data-copy="p-r5">Копировать</button></div>
+        <pre id="p-r5"># Проверьте: node --version → 22 или 24
+# Claude Code:
+npx skills add https://github.com/mvschwarz/openrig/tree/v0.6.12/skills/rigs --skill rigs --agent claude-code
+# Codex:
+npx skills add https://github.com/mvschwarz/openrig/tree/v0.6.12/skills/rigs --skill rigs --agent codex</pre>
+      </div>
+      <p class="for" style="margin-top:10px">Затем <code>/rigs</code> в Claude Code или <code>$rigs</code> в Codex. Версия v0.6.12 взята из README: проверьте актуальный тег.</p>
+    </article>
+
+    <article class="repo fade">
+      <div class="repo-top">
+        <h3><a href="https://github.com/trailhq/Trail-Code" target="_blank" rel="noopener">6. Trail-Code (бывший Graft)</a></h3>
+        <span class="pill v-try">Попробовать на тестовом</span>
+        <span class="pill">★ 10,7k</span>
+        <span class="pill">MIT</span>
+      </div>
+      <p class="what"><b>Что под капотом.</b> Слой контекста для кодинг-агентов: строит карту кода (какая функция кого вызывает) и хранит «выученное» командой в папке <code>.trail/</code>.</p>
+      <div class="pm">
+        <div><b>Плюсы</b><ul><li>Помогает агенту быстрее находить нужные файлы</li><li>Знания лежат в репозитории и доступны команде</li><li>Есть режим предпросмотра <code>trail init --dry-run</code></li></ul></div>
+        <div><b>Минусы и риски</b><ul><li>Цифры в README (46 % меньше вызовов и т. п.) — результаты самого проекта, независимой проверки я не видел</li><li>Часть «выученного» берётся из ваших диалогов: думайте о приватности</li><li><code>trail init</code> меняет <code>.claude</code>, <code>.mcp.json</code>, <code>.gitignore</code> в проекте</li></ul></div>
+      </div>
+      <p class="for"><b>Кому подходит.</b> Тем, кто работает над большим кодом вдвоём или командой и хочет общий контекст.</p>
+      <div class="prompt-box">
+        <div class="prompt-head"><span>Установка (из README, проверьте перед запуском)</span><button type="button" class="copy-btn" data-copy="p-r6">Копировать</button></div>
+        <pre id="p-r6">npm install -g @trailhq/trail-code
+# Сначала посмотреть, что будет записано:
+trail init --dry-run
+# Только Claude Code:
+trail init --agents claude</pre>
+      </div>
+      <p class="for" style="margin-top:10px">Начните с копии проекта, не с рабочего репозитория, и просмотрите изменения перед коммитом.</p>
+    </article>
+
+    <article class="repo fade">
+      <div class="repo-top">
+        <h3><a href="https://github.com/ayghri/i-have-adhd" target="_blank" rel="noopener">7. i-have-adhd</a></h3>
+        <span class="pill v-ok">Ставить</span>
+        <span class="pill">★ 58,4k</span>
+        <span class="pill">MIT</span>
+      </div>
+      <p class="what"><b>Что под капотом.</b> Небольшой навык, который меняет стиль ответов агента: сначала действие, шаги по номерам, никаких вступлений вроде «Отличный вопрос!». Диагноз не нужен.</p>
+      <div class="pm">
+        <div><b>Плюсы</b><ul><li>Не трогает код и сеть, меняет только форму ответа</li><li>Установка и удаление одной командой</li><li>Лицензия MIT, около 80 открытых обсуждений</li><li>Можно включить на каждую сессию</li></ul></div>
+        <div><b>Минусы и риски</b><ul><li>В README предложено «вставить в агента фразу, и он сам установит» — так агент выполняет инструкции из чужого репозитория; надёжнее поставить командами из INSTALL.md</li><li>Стиль подходит не всем</li></ul></div>
+      </div>
+      <p class="for"><b>Кому подходит.</b> Всем, кто устал от длинных ответов и хочет конкретные шаги.</p>
+      <div class="prompt-box">
+        <div class="prompt-head"><span>Установка (из README, проверьте перед запуском)</span><button type="button" class="copy-btn" data-copy="p-r7">Копировать</button></div>
+        <pre id="p-r7">claude plugin marketplace add ayghri/i-have-adhd
+claude plugin install i-have-adhd@i-have-adhd
+# Проверка и запуск:
+claude plugin list
+# в Claude Code: /i-have-adhd</pre>
+      </div>
+      <p class="for" style="margin-top:10px">Удалить: <code>claude plugin uninstall i-have-adhd</code>. Опционально — файл-флаг «всегда включён», описан в INSTALL.md репозитория.</p>
+    </article>
+
+    <article class="repo fade">
+      <div class="repo-top">
+        <h3><a href="https://github.com/alibaba/open-code-review" target="_blank" rel="noopener">8. open-code-review</a></h3>
+        <span class="pill v-try">Попробовать</span>
+        <span class="pill">★ 48,1k</span>
+        <span class="pill">Apache-2.0</span>
+      </div>
+      <p class="what"><b>Что под капотом.</b> Консольный инструмент (команда <code>ocr</code>) для ревью кода: читает git diff, отправляет изменённые файлы в выбранную языковую модель через агента и выдаёт замечания с точностью до строки. Есть плагины для Claude Code, Codex и других.</p>
+      <div class="pm">
+        <div><b>Плюсы</b><ul><li>Выросла из внутреннего инструмента Alibaba; открытый код</li><li>Работает с вашей моделью</li><li>Подключается к Claude Code и Codex плагинами</li><li>Apache-2.0</li></ul></div>
+        <div><b>Минусы и риски</b><ul><li>Сравнение с Claude Code в README (меньше токенов, выше точность) — данные самого проекта</li><li>Код из diff уходит в модель, которую вы настроили: для закрытого кода выбирайте проверенного провайдера</li><li>Около 340 открытых обсуждений</li></ul></div>
+      </div>
+      <p class="for"><b>Кому подходит.</b> Тем, кто хочет второе мнение по своим правкам перед коммитом.</p>
+      <div class="prompt-box">
+        <div class="prompt-head"><span>Установка (из README, проверьте перед запуском)</span><button type="button" class="copy-btn" data-copy="p-r8">Копировать</button></div>
+        <pre id="p-r8">npm install -g @alibaba-group/open-code-review
+# После установки доступна команда:
+ocr</pre>
+      </div>
+      <p class="for" style="margin-top:10px">Другие способы (скрипт, готовый бинарник, сборка из исходников) описаны в документации проекта; плагины для агентов — в папке plugins репозитория.</p>
+    </article>
+
+    <article class="repo fade">
+      <div class="repo-top">
+        <h3><a href="https://github.com/storytold/artcraft" target="_blank" rel="noopener">9. ArtCraft (и семейство Craft)</a></h3>
+        <span class="pill v-try">Только для визуала</span>
+        <span class="pill">★ 35,7k</span>
+        <span class="pill">Apache-2.0</span>
+      </div>
+      <p class="what"><b>Что под капотом.</b> Настольная «IDE для художников» на Rust: собирает сцены в 2D и 3D, позирует персонажей, подключает модели генерации изображений и видео. В организации storytold есть и родственные приложения (photocraft, wordcraft, soundcraft и другие).</p>
+      <div class="pm">
+        <div><b>Плюсы</b><ul><li>Настоящий настольный проект с историей с 2022 года</li><li>Позволяет собирать сцену до генерации, а не угадывать промптом</li><li>Сборки под macOS и Windows, исходники для Linux</li></ul></div>
+        <div><b>Минусы и риски</b><ul><li>К Claude Code прямого отношения нет: это не инструмент для кода</li><li>Генерация идёт через внешние модели и провайдеров — это платные сервисы</li><li>Семейство Craft молодое и заявлено как «clean-room» переписывание известных программ; следите за развитием</li><li>Около 500 открытых обсуждений</li></ul></div>
+      </div>
+      <p class="for"><b>Кому подходит.</b> Художникам, дизайнерам и тем, кто делает изображения и видео.</p>
+      <div class="prompt-box">
+        <div class="prompt-head"><span>Установка (из README, проверьте перед запуском)</span><button type="button" class="copy-btn" data-copy="p-r9">Копировать</button></div>
+        <pre id="p-r9"># Готовая сборка (macOS .dmg, Windows .exe/.msi):
+# https://github.com/storytold/artcraft/releases
+# Сборка из исходников (в том числе Linux): раздел Build from source в README,
+# файл _docs/dev_setup.md в репозитории</pre>
+      </div>
+      <p class="for" style="margin-top:10px">Скачивайте только со страницы Releases официального репозитория.</p>
+    </article>
+
+    <article class="repo fade">
+      <div class="repo-top">
+        <h3><a href="https://github.com/Albert-Weasker/niubigeo" target="_blank" rel="noopener">10. niubigeo</a></h3>
+        <span class="pill v-skip">Обойти, если не маркетолог</span>
+        <span class="pill">★ 8,6k</span>
+        <span class="pill">Apache-2.0</span>
+      </div>
+      <p class="what"><b>Что под капотом.</b> Open-source инструмент для GEO: показывает, упоминают ли языковые модели ваш продукт и конкурентов. Вводите домен, сравниваете ответы разных моделей, смотрите источники и повторяете замеры позже.</p>
+      <div class="pm">
+        <div><b>Плюсы</b><ul><li>Самостоятельный запуск: данные у вас</li><li>Есть 20 примеров, которые можно посмотреть без установки</li><li>Apache-2.0</li></ul></div>
+        <div><b>Минусы и риски</b><ul><li>Нужен ключ OpenRouter (платные запросы)</li><li>В README много коммерческих ссылок: промо-платформа, «AI advisor», спонсоры; карточку советника можно отключить в <code>.env</code></li><li>Узкая задача — полезна только тем, кто продвигает продукт</li></ul></div>
+      </div>
+      <p class="for"><b>Кому подходит.</b> Маркетологам и владельцам продуктов, которым важно, что говорят о них ИИ.</p>
+      <div class="prompt-box">
+        <div class="prompt-head"><span>Установка (из README, проверьте перед запуском)</span><button type="button" class="copy-btn" data-copy="p-r10">Копировать</button></div>
+        <pre id="p-r10"># Нужны Node.js 22.13+ и свой ключ OpenRouter (с лимитом)
+git clone --branch v0.3.1 --depth 1 https://github.com/Albert-Weasker/niubigeo.git
+cd niubigeo
+npm ci
+cp .env.example .env
+# впишите OPENROUTER_API_KEY в .env, затем:
+npm run server
+# откройте http://localhost:8787</pre>
+      </div>
+      <p class="for" style="margin-top:10px">Версия v0.3.1 взята из README; проверьте актуальный тег.</p>
+    </article>
+
+    <article class="repo fade">
+      <div class="repo-top">
+        <h3><a href="https://github.com/anthropics/commerce-agents" target="_blank" rel="noopener">11. commerce-agents</a></h3>
+        <span class="pill v-ok">Ставить как образец</span>
+        <span class="pill">★ 3,3k</span>
+        <span class="pill">Apache-2.0</span>
+      </div>
+      <p class="what"><b>Что под капотом.</b> Учебный референс от Anthropic: два агента на Claude — «покупатель» для приложения бизнеса и «мерчант» для бэк-офиса. Четыре демонстрационных направления (розница, путешествия, телеком, развлечения). Все компании вымышленные, настоящих заказов и списаний нет.</p>
+      <div class="pm">
+        <div><b>Плюсы</b><ul><li>Официальный образец проектирования агентов</li><li>Все записи в «мерчанте» ждут подтверждения человека</li><li>Демо запускаются локально</li><li>Apache-2.0, около 30 открытых обсуждений</li></ul></div>
+        <div><b>Минусы и риски</b><ul><li>Это пример, а не готовый продукт: правила бизнеса и авторизацию нужно делать самому</li><li>Нужен ключ Anthropic API: поставьте на него отдельный воркспейс и лимит</li><li>Нужны Python 3.11+ и Node 22</li></ul></div>
+      </div>
+      <p class="for"><b>Кому подходит.</b> Тем, кто строит своих агентов и хочет увидеть хорошую структуру.</p>
+      <div class="prompt-box">
+        <div class="prompt-head"><span>Установка (из README, проверьте перед запуском)</span><button type="button" class="copy-btn" data-copy="p-r11">Копировать</button></div>
+        <pre id="p-r11">git clone https://github.com/anthropics/commerce-agents.git &amp;&amp; cd commerce-agents
+python3 -m venv .venv &amp;&amp; source .venv/bin/activate
+pip install -r requirements.txt
+cp .env.example .env     # впишите ANTHROPIC_API_KEY (отдельный ключ с лимитом)
+(cd examples &amp;&amp; npm ci)
+python scripts/run_demo.py retail</pre>
+      </div>
+      <p class="for" style="margin-top:10px">Откройте витрину на локальном адресе, который выведет скрипт. Команда активации окружения на Windows другая — см. README репозитория.</p>
+    </article>
+
+  </div>
+</section>
+
 <!-- ══════════ ЧЕК-ЛИСТ ══════════ -->
 <section class="sec" id="checklist">
   <div class="sec-head fade">
@@ -598,6 +1146,13 @@ Thank you.</pre>
       <li><label><input type="checkbox" data-checklist-item="c10"> Положил промпт восстановления в ВОССТАНОВЛЕНИЕ.md внутри папки</label></li>
       <li><label><input type="checkbox" data-checklist-item="c11"> Провёл «учебную тревогу»: другой агент поднял контекст из папки</label></li>
       <li><label><input type="checkbox" data-checklist-item="c12"> Знаю план первых суток: статус → выгрузка → одна апелляция → работа в другом агенте</label></li>
+      <li><label><input type="checkbox" data-checklist-item="c13"> Проверил версии PHP, Node.js, NGINX, Go, GitLab на своих серверах и составил список обновлений</label></li>
+      <li><label><input type="checkbox" data-checklist-item="c14"> Проверил сертификаты (curl-тест и certifi/ca-certificates), пересобрал Docker с --pull --no-cache</label></li>
+      <li><label><input type="checkbox" data-checklist-item="c15"> Поставил лимиты трат и завёл отдельный воркспейс и ключ на каждый внешний сервис</label></li>
+      <li><label><input type="checkbox" data-checklist-item="c16"> Прогнал gitleaks по истории репозиториев; найденные ключи заменил</label></li>
+      <li><label><input type="checkbox" data-checklist-item="c17"> Включил Dependabot и двухфакторную защиту/ключ доступа на GitHub</label></li>
+      <li><label><input type="checkbox" data-checklist-item="c18"> Все рабочие проекты лежат в приватных репозиториях, а .gitignore написан до первого коммита</label></li>
+      <li><label><input type="checkbox" data-checklist-item="c19"> Запустил промпт проверки из шага 5 и поставил его на каждую неделю</label></li>
     </ul>
     <p class="checklist-done" id="checklist-done" hidden>Готово: теперь блокировка аккаунта стоит вам вечера, а не месяцев работы.</p>
   </div>
@@ -608,7 +1163,7 @@ Thank you.</pre>
   <div class="sec-head fade">
     <div class="num-badge n5">?</div>
     <h2 class="sec-title">Проверьте себя</h2>
-    <p class="sec-desc">Шесть вопросов с разбором. Правильный вариант подсвечивается после ответа.</p>
+    <p class="sec-desc">Девять вопросов с разбором. Правильный вариант подсвечивается после ответа.</p>
   </div>
   <div class="quiz fade">
     <div class="quiz-question" data-quiz="1">
@@ -671,8 +1226,38 @@ Thank you.</pre>
       <button type="button" class="quiz-check" data-quiz-check="6">Проверить</button>
       <p class="quiz-feedback" data-quiz-feedback="6" hidden></p>
     </div>
+    <div class="quiz-question" data-quiz="7">
+      <p class="quiz-text">Ключ API случайно попал в репозиторий, а потом вы удалили его из кода. Что делать?</p>
+      <div class="quiz-options">
+        <label><input type="radio" name="q7" value="wrong"> Ничего: он удалён</label>
+        <label><input type="radio" name="q7" value="right"> Заменить ключ: в истории git он остаётся</label>
+        <label><input type="radio" name="q7" value="wrong"> Сделать репозиторий публичным</label>
+      </div>
+      <button type="button" class="quiz-check" data-quiz-check="7">Проверить</button>
+      <p class="quiz-feedback" data-quiz-feedback="7" hidden></p>
+    </div>
+    <div class="quiz-question" data-quiz="8">
+      <p class="quiz-text">Какую версию чужого репозитория лучше клонировать?</p>
+      <div class="quiz-options">
+        <label><input type="radio" name="q8" value="wrong"> Любую, главное — самую свежую ветку</label>
+        <label><input type="radio" name="q8" value="right"> Конкретный тег, после чтения README и скриптов установки</label>
+        <label><input type="radio" name="q8" value="wrong"> Ту, у которой больше звёзд</label>
+      </div>
+      <button type="button" class="quiz-check" data-quiz-check="8">Проверить</button>
+      <p class="quiz-feedback" data-quiz-feedback="8" hidden></p>
+    </div>
+    <div class="quiz-question" data-quiz="9">
+      <p class="quiz-text">Что вы просите агента сделать в первую очередь при проверке сервера?</p>
+      <div class="quiz-options">
+        <label><input type="radio" name="q9" value="wrong"> Сразу всё обновить</label>
+        <label><input type="radio" name="q9" value="right"> Составить отчёт и ничего не менять</label>
+        <label><input type="radio" name="q9" value="wrong"> Удалить старые версии</label>
+      </div>
+      <button type="button" class="quiz-check" data-quiz-check="9">Проверить</button>
+      <p class="quiz-feedback" data-quiz-feedback="9" hidden></p>
+    </div>
   </div>
-  <p class="quiz-score-box fade" id="quiz-score" style="margin-top:18px">Отвечено: 0 / 6</p>
+  <p class="quiz-score-box fade" id="quiz-score" style="margin-top:18px">Отвечено: 0 / 9</p>
 </section>
 
 <!-- ══════════ ЗАКЛЮЧЕНИЕ ══════════ -->
@@ -689,14 +1274,17 @@ Thank you.</pre>
     <li><strong>Умная папка</strong> (AGENTS.md, КОНТЕКСТ, РЕШЕНИЯ с причинами, логи, ВОССТАНОВЛЕНИЕ) делает бан потерей одного вечера.</li>
     <li><strong>В первые сутки</strong>: статус → выгрузка → одна апелляция → работа в другом агенте. Без нового «обходного» аккаунта.</li>
     <li><strong>Раз в месяц — учебная тревога</strong>: непроверенная копия — это надежда.</li>
+    <li><strong>Проекты защищаются версиями, ключами и лимитами</strong>: проверить версии, закрыть сертификаты, поставить лимиты трат, заменить утёкшие ключи, включить Dependabot.</li>
+    <li><strong>GitHub — сейф</strong>: приватный репозиторий по умолчанию, .gitignore до первого коммита, публикация только после проверки на секреты.</li>
+    <li><strong>Чужое ставьте по порядку</strong>: прочитать README и скрипты, взять тег, запустить в песочнице, без рабочих ключей.</li>
   </ol>
 </section>
 
 </main>
 
 <footer>
-  <p>Учебная страница · Шандалин Д. А. · <a class="svc-link" href="https://github.com/SmooL-G/shandalin-card" target="_blank" rel="noopener">визитка</a> · 2026</p>
-  <p>Правила, цифры и цены сервисов меняются — сверяйтесь с официальными страницами. Страница не является юридической или финансовой консультацией.</p>
+  <p>Учебная страница · Шандалин Д. А. · <a href="https://github.com/SmooL-G/shandalin-card" target="_blank" rel="noopener">визитка</a> · <a href="https://t.me/smitAnin" target="_blank" rel="noopener">@smitAnin</a> · 2026</p>
+  <p>Правила, версии, цены и состояние репозиториев меняются — сверяйтесь с официальными страницами. Страница не является юридической или финансовой консультацией. Оценки репозиториев сделаны по их описанию, без запуска.</p>
 </footer>
 
 <script>
