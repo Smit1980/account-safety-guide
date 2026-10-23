@@ -180,6 +180,7 @@ footer a{color:var(--ink);font-weight:700}
   <a class="nav-link" href="#s11">В жизни</a>
   <a class="nav-link" href="#s12">GitHub</a>
   <a class="nav-link" href="#s13">Репозитории</a>
+  <a class="nav-link" href="#s14">Моды</a>
   <a class="nav-link" href="#checklist">Чек-лист</a>
   <a class="nav-link" href="#quiz">Квиз</a>
 </nav>
@@ -188,16 +189,17 @@ footer a{color:var(--ink);font-weight:700}
   <div class="hero-badges">
     <span class="hero-badge">Учебная страница</span>
     <span class="hero-badge">Claude · Claude Code · Codex</span>
-    <span class="hero-badge">4 части · ~60 минут</span>
+    <span class="hero-badge">5 частей · ~75 минут</span>
   </div>
   <h1 class="hero-title">Не потерять <em>аккаунт</em>, проекты и ключи</h1>
-  <p class="hero-sub">Четыре части: как сберечь аккаунт и контекст, как не отдать проекты взломщикам, как работать с GitHub вместе с Claude Code и какие репозитории октября стоит ставить, пробовать или обходить.</p>
+  <p class="hero-sub">Пять частей: как сберечь аккаунт и контекст, как не отдать проекты взломщикам, как работать с GitHub вместе с Claude Code, какие репозитории октября стоит ставить и как делать моды для Claude Code, не открыв им лишнего.</p>
   <nav class="hero-nav" aria-label="Разделы страницы">
     <a class="cta" href="#s10">Защита проектов: пошагово</a>
     <a href="#s1">Аккаунт</a>
     <a href="#s6">Умная папка</a>
     <a href="#s12">GitHub для Claude Code</a>
     <a href="#s13">11 репозиториев</a>
+    <a href="#s14">Моды Claude Code</a>
     <a href="#quiz">Проверить себя</a>
   </nav>
 </header>
@@ -1124,6 +1126,307 @@ python scripts/run_demo.py retail</pre>
   </div>
 </section>
 
+
+<div class="part fade"><span>Часть V</span><h2>Моды Claude Code</h2><p>Как переделать Claude Code под себя, не умея программировать, и как при этом не отдать мод-программе свои файлы и ключи.</p></div>
+
+<!-- ══════════ 14: МОДЫ ══════════ -->
+<section class="sec" id="s14">
+  <div class="sec-head fade">
+    <div class="num-badge">14</div>
+    <h2 class="sec-title">Моды: свой Claude Code за десять минут</h2>
+    <p class="sec-desc">Мод — маленькая программа внутри Claude Code. Она показывает панели и индикаторы, придерживает опасные команды, добавляет свои слэш-команды. Писать её не нужно: по вашему описанию мод пишет Claude. Короткий путь: проверить, что моды работают, сделать свой, а затем прочитать раздел «Безопасность мода» — он важнее остальных.</p>
+  </div>
+
+  <div class="note-callout fade" style="margin-top:0">
+    <p><strong>Откуда сведения</strong>Версии, команды и таблицы основаны на присланном руководстве и официальной документации Anthropic (ссылки внизу раздела). Я не запускал эти команды на вашем компьютере. Функция новая и быстро меняется: сверяйтесь с документацией.</p>
+  </div>
+
+  <h3 class="sub fade">Что такое мод</h3>
+  <div class="grid fade">
+    <div class="card"><p class="c-name">Посмотреть</p><p>Посчитать, записать и пропустить событие дальше: вы отправили запрос, Claude собирается выполнить команду.</p></div>
+    <div class="card"><p class="c-name">Поменять</p><p>Например, дописать своё к индикатору работы или перерисовать часть интерфейса.</p></div>
+    <div class="card"><p class="c-name">Ответить сам</p><p>Например, не пустить команду дальше и спросить вас, или выполнить свою слэш-команду без обращения к Claude.</p></div>
+  </div>
+  <p class="sec-desc fade" style="margin-top:14px">Мод — это плагин Claude Code. Он ставится, обновляется и удаляется так же, как любой плагин.</p>
+  <div class="tbl-wrap fade" style="margin-top:14px">
+    <table>
+      <thead><tr><th>Где вы запускаете Claude Code</th><th>Мод работает</th><th>Интерфейс мода виден</th></tr></thead>
+      <tbody>
+        <tr><td><code>claude</code> в терминале</td><td>да</td><td>да</td></tr>
+        <tr><td>Вкладка Code в приложении Claude</td><td>да</td><td>да, кроме элементов «только для терминала»</td></tr>
+        <tr><td>Расширение для VS Code</td><td>да</td><td>нет</td></tr>
+        <tr><td>Автозапуск <code>claude -p</code></td><td>да</td><td>нет</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="sec-desc fade" style="margin-top:12px">Полоса над строкой ввода (на ней стоят Token Weather и Next steps) рисуется только в терминале.</p>
+
+  <h3 class="sub fade">Шаг 1. Проверьте, что моды работают</h3>
+  <ol class="steps fade">
+    <li>Обновите Claude Code и проверьте версию: нужна <b>2.1.287 или новее</b> (по материалу).</li>
+    <li>Если версия ниже, у вас, вероятно, стабильный канал обновлений (отстаёт примерно на неделю). Переключение: <code>/config</code> → Auto-update channel → <code>latest</code>. При установке через Homebrew канал задаёт название пакета: <code>claude-code</code> — стабильный, <code>claude-code@latest</code> — самый новый.</li>
+    <li>Проверьте, включены ли моды для вашей учётной записи: <code>claude plugin test</code>. Ответ «no hooks module to load» хороший: моды загружаются, просто в этой папке нет мода для проверки.</li>
+  </ol>
+  <div class="prompt-box fade">
+    <div class="prompt-head"><span>Терминал: обновить и проверить</span><button type="button" class="copy-btn" data-copy="p-m-upd">Копировать</button></div>
+    <pre id="p-m-upd">claude update
+claude --version
+claude plugin test</pre>
+  </div>
+
+  <div class="warn-callout fade">
+    <p><strong>Если моды выключены удалённо</strong>Если в ответе сказано, что моды выключены «in this process», Anthropic выключила установленные моды удалённо. Настройками на компьютере это не исправить.</p>
+  </div>
+
+  <h3 class="sub fade">Шаг 2. Свой мод за минуту: Token Weather</h3>
+  <p class="sec-desc fade" style="margin-bottom:14px">Token Weather — прогноз погоды для контекста. Контекст — вся переписка, которую Claude держит в памяти, и у неё есть предел. Мод показывает над строкой ввода, насколько окно заполнено и как оно росло от ответа к ответу.</p>
+  <ol class="steps fade">
+    <li>Создайте пустую папку и запустите в ней Claude Code (команда ниже).</li>
+    <li>Вставьте промпт (он ниже).</li>
+    <li>Claude Code спросит разрешение на каждый файл мода: мод пишется в служебную папку <code>~/.claude</code>, а она защищена. Прочитайте, что именно вы разрешаете, и разрешите. Потом он спросит про горячую перезагрузку (обновление мода на ходу): выберите Enable for this session.</li>
+    <li>Когда Claude закончит ответ, над строкой ввода появится погода. Чтобы увидеть изменение, попросите прочитать несколько больших файлов.</li>
+    <li>Правьте обычной фразой, мод перезагрузится на месте.</li>
+  </ol>
+  <div class="prompt-box fade">
+    <div class="prompt-head"><span>Терминал: пустая папка и запуск</span><button type="button" class="copy-btn" data-copy="p-m-dir">Копировать</button></div>
+    <pre id="p-m-dir">mkdir -p ~/Desktop/demo-mods &amp;&amp; cd ~/Desktop/demo-mods &amp;&amp; claude</pre>
+  </div>
+  <div class="prompt-box fade">
+    <div class="prompt-head"><span>Промпт: создать мод Token Weather</span><button type="button" class="copy-btn" data-copy="p-m-tw">Копировать</button></div>
+    <pre id="p-m-tw">Сделай мне мод для Claude Code под названием token-weather: прогноз погоды для моего контекстного окна в полосе над строкой ввода.
+Что показывать одной строкой:
+- Значок и слово, насколько заполнено окно: до 25% ☀ Ясно (жёлтым), 25–49% ☁ Облачно (голубым), 50–74% ☂ Дождь (синим), 75–89% ☇ Гроза (пурпурным), от 90% ↯ Пора сжимать (красным).
+- Процент, потом сколько токенов занято из окна, например «134.4k / 200k».
+- Маленький график последних 12 ходов из символов ▁▂▃▄▅▆▇█.
+- Сколько добавил последний ход, например «▲ +98.3k».
+Обновляй после каждого хода.</pre>
+  </div>
+  <div class="prompt-box fade">
+    <div class="prompt-head"><span>Тот же промпт по-английски (оригинал)</span><button type="button" class="copy-btn" data-copy="p-m-tw-en">Копировать</button></div>
+    <pre id="p-m-tw-en">Make me a Claude Code mod called token-weather: a live forecast of my context window, shown in the band above the prompt.
+What it should show, on one line:
+- A weather icon and word for how full the context window is: under 25% ☀ Clear (yellow), 25–49% ☁ Cloudy (cyan), 50–74% ☂ Showers (blue), 75–89% ☇ Storm (magenta), 90% and up ↯ Compact soon (red).
+- The percentage used, then the tokens used out of the window, like "134.4k / 200k".
+- A small chart of the last 12 turns, drawn with ▁▂▃▄▅▆▇█.
+- How much the last turn added, like "▲ +98.3k last turn".
+It should update after every turn.</pre>
+  </div>
+  <div class="prompt-box fade">
+    <div class="prompt-head"><span>Промпты: правки одной фразой</span><button type="button" class="copy-btn" data-copy="p-m-tw2">Копировать</button></div>
+    <pre id="p-m-tw2">Пусть гроза начинается с 70%.
+
+---
+
+Добавь в конце строки стоимость в долларах.</pre>
+  </div>
+
+  <div class="note-callout fade">
+    <p><strong>Как это работает</strong>Промпт описывает только то, что вы хотите видеть. Как это сделать, Claude знает сам: в Claude Code есть встроенный навык <code>plugin-authoring</code> для написания модов. Вызвать его вручную можно командой <code>/plugin-authoring</code>.</p>
+  </div>
+
+  <h3 class="sub fade">Шаг 3. Сохраните мод навсегда</h3>
+  <p class="sec-desc fade" style="margin-bottom:14px">Мод, который написал Claude, живёт только в той сессии, где его сделали: он лежит в <code>~/.claude/dev-mods/&lt;номер сессии&gt;/&lt;название мода&gt;/</code>, и Claude Code со временем эту папку удаляет. Самый простой способ — попросить Claude.</p>
+  <div class="prompt-box fade">
+    <div class="prompt-head"><span>Промпт: сохранить мод в свою папку</span><button type="button" class="copy-btn" data-copy="p-m-keep">Копировать</button></div>
+    <pre id="p-m-keep">Скопируй мод token-weather из папки dev-mods этой сессии в ~/my-mods/token-weather. Создай в ~/my-mods файл .claude-plugin/marketplace.json с этим модом и покажи две команды, чтобы установить его для всех моих сессий.</pre>
+  </div>
+
+  <p class="sec-desc fade" style="margin-top:14px">Вручную: создайте папку <code>~/my-mods</code>, скопируйте в неё папку мода и положите рядом файл <code>~/my-mods/.claude-plugin/marketplace.json</code>:</p>
+  <div class="prompt-box fade">
+    <div class="prompt-head"><span>Шаблон marketplace.json: подставьте своё</span><button type="button" class="copy-btn" data-copy="p-m-json">Копировать</button></div>
+    <pre id="p-m-json">{
+  "name": "my-mods",
+  "owner": { "name": "Вы" },
+  "plugins": [{ "name": "token-weather", "source": "./token-weather" }]
+}</pre>
+  </div>
+  <div class="prompt-box fade">
+    <div class="prompt-head"><span>Терминал: установить для всех сессий</span><button type="button" class="copy-btn" data-copy="p-m-inst">Копировать</button></div>
+    <pre id="p-m-inst">claude plugin marketplace add ~/my-mods
+claude plugin install token-weather@my-mods --scope user</pre>
+  </div>
+  <div class="prompt-box fade">
+    <div class="prompt-head"><span>Терминал: на одну сессию, без установки</span><button type="button" class="copy-btn" data-copy="p-m-dirflag">Копировать</button></div>
+    <pre id="p-m-dirflag">claude --plugin-dir ~/my-mods/token-weather</pre>
+  </div>
+
+  <div class="ok-callout fade">
+    <p><strong>Совет: положите свои моды в «сейф»</strong>Папку <code>~/my-mods</code> можно превратить в приватный репозиторий по сценарию 2 из части III. Тогда мод переживёт и смену компьютера, и блокировку аккаунта. Если Claude Code уже открыт, после установки наберите <code>/reload-plugins</code>.</p>
+  </div>
+
+  <h3 class="sub fade">Готовые моды</h3>
+  <p class="sec-desc fade" style="margin-bottom:14px">Anthropic выложила три примера в публичном репозитории. Каждый начинался как одна из десяти идей, которые Claude придумал сам.</p>
+  <div class="tbl-wrap fade">
+    <table>
+      <thead><tr><th>Мод</th><th>Что делает</th></tr></thead>
+      <tbody>
+        <tr><td>Token Weather</td><td>Прогноз погоды для контекста над строкой ввода</td></tr>
+        <tr><td>Blast Radius</td><td>Придерживает опасную команду (удаление папки, откат изменений в git, принудительная отправка кода, миграция базы), показывает, что она изменит, и спрашивает. «Отменить» выбрано сразу</td></tr>
+        <tr><td>Replay Theater</td><td>Команда <code>/replay</code>: по шагам показывает каждую правку Claude в последнем ответе</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="prompt-box fade">
+    <div class="prompt-head"><span>Терминал: попробовать на одну сессию</span><button type="button" class="copy-btn" data-copy="p-m-try">Копировать</button></div>
+    <pre id="p-m-try">git clone https://github.com/anthropics/claude-code-playground.git
+cd claude-code-playground/claude-code/mods
+claude --plugin-dir ./blast-radius
+# вместо ./blast-radius можно ./token-weather или ./replay-theater</pre>
+  </div>
+  <div class="prompt-box fade">
+    <div class="prompt-head"><span>Терминал: установить насовсем (из той же папки)</span><button type="button" class="copy-btn" data-copy="p-m-perm">Копировать</button></div>
+    <pre id="p-m-perm">claude plugin marketplace add ./
+claude plugin install blast-radius@claude-code-playground-mods --scope user</pre>
+  </div>
+
+  <div class="danger-callout fade">
+    <p><strong>Blast Radius — страховка, а не запрет</strong>Anthropic сама пишет, что мод читает только текст команды: удаление через скрипт или псевдоним команды он пропустит. Чтобы запретить наверняка, нужны правила разрешений Claude Code (раздел deny).</p>
+  </div>
+
+  <h3 class="sub fade">Каталог Anthropic и мод Next steps</h3>
+  <p class="sec-desc fade" style="margin-bottom:14px">У Anthropic есть каталог модов на <a class="svc-link" href="https://claude.dev/mods/" target="_blank" rel="noopener">claude.dev/mods</a>: три примера, встроенные моды и мод сообщества Next steps. После каждого ответа он предлагает до трёх следующих запросов: нажимаете 1, 2 или 3, и запрос появляется в строке ввода, 0 — скрыть.</p>
+  <div class="prompt-box fade">
+    <div class="prompt-head"><span>Терминал: установить Next steps</span><button type="button" class="copy-btn" data-copy="p-m-ns">Копировать</button></div>
+    <pre id="p-m-ns">claude plugin marketplace add anthropics/claude-plugins-community
+claude plugin install next-steps@claude-community
+# в открытой сессии после установки: /reload-plugins</pre>
+  </div>
+
+  <h3 class="sub fade">Моды сообщества: чужой код</h3>
+  <div class="warn-callout fade" style="margin-top:0">
+    <p><strong>Сначала безопасность</strong>Моды сообщества написаны не Anthropic и работают с вашими правами. Прочитайте раздел «Безопасность мода» ниже и выполните проверку до установки. Названия репозиториев приведены ради команд установки, а не как рекомендация.</p>
+  </div>
+  <div class="tbl-wrap fade" style="margin-top:14px">
+    <table>
+      <thead><tr><th>Мод</th><th>Что делает</th><th>Что нужно</th></tr></thead>
+      <tbody>
+        <tr><td>Mission control</td><td>Живая карта: какие файлы агент читает и правит, что делают его помощники. Команда <code>/mission</code></td><td>Вид с картой кода: macOS, Google Chrome и терминал с показом картинок (Ghostty, kitty, iTerm2). Вид с агентами работает везде</td></tr>
+        <tr><td>Fanyi</td><td>Вы пишете на своём языке, Claude получает английский, под каждым ответом перевод. Настройка: <code>/fanyi settings</code></td><td>Node.js 18+ и переводчик: ключ к модели с API в формате OpenAI либо встроенный переводчик Apple (macOS 15+)</td></tr>
+        <tr><td>Набор из четырёх модов</td><td>Cache Keeper (контекст, лимиты, сколько осталось жить кешу), Recording Mode (прячет личные данные на экране при записи видео), Goal Meter (задачи и время по длинной цели), Collision Guard (спрашивает, прежде чем один чат правит файл, который только что менял другой)</td><td>Ничего дополнительного</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="prompt-box fade">
+    <div class="prompt-head"><span>Терминал: команды установки (после проверки мода)</span><button type="button" class="copy-btn" data-copy="p-m-comm">Копировать</button></div>
+    <pre id="p-m-comm"># Mission control
+claude plugin marketplace add hamzafer/claude-code-mods
+claude plugin install mission-control@claude-code-mods
+
+# Fanyi
+claude plugin marketplace add JrCx7scC/claude-code-fanyi
+claude plugin install fanyi@claude-code-fanyi
+
+# Набор из четырёх модов (пример: Recording Mode)
+claude plugin marketplace add nateherkai/claude-code-mods
+claude plugin install recording-mode@nateherk-mods</pre>
+  </div>
+
+  <p class="sec-desc fade" style="margin-top:12px">Есть и сторонние каталоги (например, ccmods.dev); их записи проверены по коду, но авторы каталога моды не запускали. Относитесь к ним как к чужому коду.</p>
+
+  <h3 class="sub fade">Как найти свои моды</h3>
+  <p class="sec-desc fade" style="margin-bottom:14px">Самый полезный мод — тот, что отвечает на ваш вопрос. Пусть Claude найдёт эти вопросы сам. Первый способ: Claude читает ваши прошлые сессии.</p>
+  <div class="prompt-box fade">
+    <div class="prompt-head"><span>Промпт: пять модов под вашу работу</span><button type="button" class="copy-btn" data-copy="p-m-find">Копировать</button></div>
+    <pre id="p-m-find">Прочитай мои последние сессии Claude Code. Найди задачи, которые я делаю часто, указания, которые повторяю, и места, где я теряю время. Предложи пять модов под мою работу, пронумеруй их и объясни, что делает каждый.</pre>
+  </div>
+  <div class="prompt-box fade">
+    <div class="prompt-head"><span>Оригинал по-английски</span><button type="button" class="copy-btn" data-copy="p-m-find-en">Копировать</button></div>
+    <pre id="p-m-find-en">Look through my session logs and identify the tasks I do often, the instructions I repeat, and the friction in my workflow. Suggest five useful Claude Code mods based on those patterns, and explain what each would do.</pre>
+  </div>
+
+  <p class="sec-desc fade" style="margin:14px 0">Второй способ: десять идей, потом выбрать. Так появились три примера Anthropic.</p>
+  <div class="prompt-box fade">
+    <div class="prompt-head"><span>Промпты: десять идей и сборка выбранных</span><button type="button" class="copy-btn" data-copy="p-m-ten">Копировать</button></div>
+    <pre id="p-m-ten">Придумай десять идей модов для Claude Code под мою работу. Для каждой напиши, что она показывает или меняет и зачем мне. Пронумеруй.
+
+---
+
+Сделай идеи 1, 2 и 7. Проверь их в Claude Code и объясни, как ими пользоваться.</pre>
+  </div>
+
+  <div class="warn-callout fade">
+    <p><strong>Осторожно с записью экрана</strong>В прошлых сессиях бывают личные данные и ключи. Сначала посмотрите список сами, потом показывайте другим.</p>
+  </div>
+</section>
+
+<!-- ══════════ 15: БЕЗОПАСНОСТЬ МОДА ══════════ -->
+<section class="sec" id="s15">
+  <div class="sec-head fade">
+    <div class="num-badge">15</div>
+    <h2 class="sec-title">Безопасность мода: что он может и как проверить</h2>
+    <p class="sec-desc">Мод работает с вашими правами внутри Claude Code. Это та же угроза, что и «установщик из сети» из части II, только встроенная в ваш рабочий инструмент. Поэтому правило простое: чужой мод ставят после проверки.</p>
+  </div>
+
+  <h3 class="sub fade">Что может мод на вашем компьютере</h3>
+  <div class="grid fade">
+    <div class="card"><p class="c-name">Файлы и программы</p><p>Читать и менять файлы везде, куда есть доступ у вашей учётной записи. Запускать программы и ходить в интернет.</p></div>
+    <div class="card"><p class="c-name">Ключи</p><p>Читать переменные окружения и файлы настроек, в том числе <code>.env</code>.</p></div>
+    <div class="card"><p class="c-name">Ваши запросы и действия</p><p>Видеть каждый запрос и каждое действие Claude, менять их, отправлять запрос как будто от вас, одобрить действие до того, как вас спросят.</p></div>
+    <div class="card"><p class="c-name">Ваши лимиты</p><p>Вызывать модель на вашей подписке или ключе и тратить лимиты.</p></div>
+  </div>
+  <div class="danger-callout fade">
+    <p><strong>Песочницы у модов нет</strong>Даже если включена песочница для команд Claude, программа, которую запустил мод, работает вне её.</p>
+  </div>
+
+  <h3 class="sub fade">Встроенный сторож есть не у всех</h3>
+  <div class="card fade">
+    <p>В Claude Code есть встроенный мод-сторож <code>cc-plugin-sec-default</code>. Он не даёт модам одобрить действие, запрещённое вашими правилами deny. Но загружается он только при одном из условий: на компьютере есть управляемые настройки (их ставит администратор) либо вы вошли с тарифом Team или Enterprise.</p>
+    <p>На личной подписке, со своим ключом API или через облака Amazon, Google и Microsoft без управляемых настроек сторожа нет. Значит, мод может одобрить даже то, что вы запретили правилами. И даже со сторожем мод прочитает <code>.env</code> сам, своим вызовом <code>$.fs.read</code>, если запрещено только чтение файла инструментами Claude.</p>
+  </div>
+
+  <h3 class="sub fade">Проверьте мод до установки</h3>
+  <ol class="steps fade">
+    <li>Скачайте папку мода (например, <code>git clone</code> его репозитория) в отдельную тестовую папку.</li>
+    <li>Выполните <code>claude plugin validate ./папка-мода</code>.</li>
+    <li>В ответе две строки: <code>hooks:</code> — на какие события мод реагирует, и <code>calls:</code> — что он делает. Сверьте <code>calls:</code> с таблицей ниже.</li>
+    <li>Здравый смысл: если мод про оформление, а просит интернет, ваши ключи и запуск программ — не ставьте.</li>
+  </ol>
+  <div class="tbl-wrap fade" style="margin-top:14px">
+    <table>
+      <thead><tr><th>Что в строке calls</th><th>Что это значит</th></tr></thead>
+      <tbody>
+        <tr><td><code>$.fs.read</code>, <code>$.fs.write</code></td><td>Читает или пишет файлы везде, где можете вы</td></tr>
+        <tr><td><code>$.process.run</code>, <code>$.process.spawn</code></td><td>Запускает программы от вашего имени</td></tr>
+        <tr><td><code>$.http.fetch</code></td><td>Ходит в интернет</td></tr>
+        <tr><td><code>$.env.get</code>, <code>$.settings.read</code></td><td>Читает переменные окружения и настройки, где бывают ключи</td></tr>
+        <tr><td><code>$.env.set</code></td><td>Меняет переменные окружения для Claude Code и всего, что он запускает</td></tr>
+        <tr><td><code>$.mcp.call</code></td><td>Вызывает инструменты подключённых MCP-серверов</td></tr>
+        <tr><td><code>$.model.complete</code></td><td>Тратит вашу подписку или ключ на вызовы модели</td></tr>
+        <tr><td><code>$.prompt.submit</code></td><td>Отправляет запрос как будто от вас</td></tr>
+        <tr><td><code>$.session.send</code></td><td>Отправляет сообщения в другие ваши сессии</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="warn-callout fade">
+    <p><strong>События hooks</strong>События <code>tool.call</code> и <code>prompt.submit</code> значат, что мод видит каждое действие и каждый запрос и может их поменять.</p>
+  </div>
+
+  <h3 class="sub fade">Как выключить и удалить</h3>
+  <div class="tbl-wrap fade">
+    <table>
+      <thead><tr><th>Что нужно</th><th>Как</th></tr></thead>
+      <tbody>
+        <tr><td>Выключить один мод</td><td><code>/plugin</code>, вкладка Installed, выключить мод. Или <code>claude plugin disable &lt;мод&gt;@&lt;маркетплейс&gt;</code></td></tr>
+        <tr><td>Выключить все установленные моды на одну сессию</td><td>Запустить <code>claude --safe-mode</code> (выключит и другие ваши настройки)</td></tr>
+        <tr><td>Выключить все моды во всех сессиях</td><td>В <code>~/.claude/settings.json</code> поставить <code>"disableAllHooks": true</code> (остановит и обычные хуки, то есть ваши скрипты на события, и настроенную строку состояния)</td></tr>
+        <tr><td>Удалить мод</td><td><code>claude plugin uninstall &lt;мод&gt;@&lt;маркетплейс&gt;</code></td></tr>
+        <tr><td>Удалить маркетплейс</td><td><code>claude plugin marketplace remove &lt;название&gt;</code></td></tr>
+        <tr><td>Посмотреть, какие моды загружены</td><td><code>/plugin</code>: под вкладками строка вида «1 mod active · token-weather»</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="sub fade">Официальная документация</h3>
+  <div class="grid fade">
+    <div class="card"><p class="c-name">Обзор модов</p><p><a class="svc-link" href="https://code.claude.com/docs/en/plugins/mods/overview" target="_blank" rel="noopener">code.claude.com · mods/overview</a></p></div>
+    <div class="card"><p class="c-name">Как сделать мод</p><p><a class="svc-link" href="https://code.claude.com/docs/en/plugins/mods/create" target="_blank" rel="noopener">code.claude.com · mods/create</a></p></div>
+    <div class="card"><p class="c-name">Моды в организации и безопасность</p><p><a class="svc-link" href="https://code.claude.com/docs/en/plugins/mods/admin" target="_blank" rel="noopener">code.claude.com · mods/admin</a></p></div>
+    <div class="card"><p class="c-name">Если мод не работает</p><p><a class="svc-link" href="https://code.claude.com/docs/en/plugins/mods/troubleshoot" target="_blank" rel="noopener">code.claude.com · mods/troubleshoot</a></p></div>
+    <div class="card"><p class="c-name">Каналы обновлений</p><p><a class="svc-link" href="https://code.claude.com/docs/en/setup" target="_blank" rel="noopener">code.claude.com · setup</a></p></div>
+    <div class="card"><p class="c-name">Примеры Anthropic</p><p><a class="svc-link" href="https://github.com/anthropics/claude-code-playground/tree/main/claude-code/mods" target="_blank" rel="noopener">claude-code-playground · mods</a></p></div>
+  </div>
+</section>
+
 <!-- ══════════ ЧЕК-ЛИСТ ══════════ -->
 <section class="sec" id="checklist">
   <div class="sec-head fade">
@@ -1153,6 +1456,10 @@ python scripts/run_demo.py retail</pre>
       <li><label><input type="checkbox" data-checklist-item="c17"> Включил Dependabot и двухфакторную защиту/ключ доступа на GitHub</label></li>
       <li><label><input type="checkbox" data-checklist-item="c18"> Все рабочие проекты лежат в приватных репозиториях, а .gitignore написан до первого коммита</label></li>
       <li><label><input type="checkbox" data-checklist-item="c19"> Запустил промпт проверки из шага 5 и поставил его на каждую неделю</label></li>
+      <li><label><input type="checkbox" data-checklist-item="c20"> Обновил Claude Code до 2.1.287+ и проверил моды командой claude plugin test</label></li>
+      <li><label><input type="checkbox" data-checklist-item="c21"> Сделал свой первый мод (Token Weather) и сохранил его в ~/my-mods</label></li>
+      <li><label><input type="checkbox" data-checklist-item="c22"> Перед установкой чужого мода запускаю claude plugin validate и читаю строки hooks: и calls:</label></li>
+      <li><label><input type="checkbox" data-checklist-item="c23"> Знаю, как выключить моды: /plugin, claude --safe-mode, disableAllHooks</label></li>
     </ul>
     <p class="checklist-done" id="checklist-done" hidden>Готово: теперь блокировка аккаунта стоит вам вечера, а не месяцев работы.</p>
   </div>
@@ -1163,7 +1470,7 @@ python scripts/run_demo.py retail</pre>
   <div class="sec-head fade">
     <div class="num-badge n5">?</div>
     <h2 class="sec-title">Проверьте себя</h2>
-    <p class="sec-desc">Девять вопросов с разбором. Правильный вариант подсвечивается после ответа.</p>
+    <p class="sec-desc">Двенадцать вопросов с разбором. Правильный вариант подсвечивается после ответа.</p>
   </div>
   <div class="quiz fade">
     <div class="quiz-question" data-quiz="1">
@@ -1256,8 +1563,38 @@ python scripts/run_demo.py retail</pre>
       <button type="button" class="quiz-check" data-quiz-check="9">Проверить</button>
       <p class="quiz-feedback" data-quiz-feedback="9" hidden></p>
     </div>
+    <div class="quiz-question" data-quiz="10">
+      <p class="quiz-text">Что может мод Claude Code на вашем компьютере?</p>
+      <div class="quiz-options">
+        <label><input type="radio" name="q10" value="wrong"> Только рисовать индикаторы в интерфейсе</label>
+        <label><input type="radio" name="q10" value="right"> Читать файлы и ключи, запускать программы и ходить в интернет с вашими правами</label>
+        <label><input type="radio" name="q10" value="wrong"> Ничего: он работает в песочнице</label>
+      </div>
+      <button type="button" class="quiz-check" data-quiz-check="10">Проверить</button>
+      <p class="quiz-feedback" data-quiz-feedback="10" hidden></p>
+    </div>
+    <div class="quiz-question" data-quiz="11">
+      <p class="quiz-text">Что показывает строка calls: в ответе claude plugin validate?</p>
+      <div class="quiz-options">
+        <label><input type="radio" name="q11" value="wrong"> Сколько раз мод запускался</label>
+        <label><input type="radio" name="q11" value="right"> Что именно мод делает: файлы, сеть, программы, ключи</label>
+        <label><input type="radio" name="q11" value="wrong"> Размер мода</label>
+      </div>
+      <button type="button" class="quiz-check" data-quiz-check="11">Проверить</button>
+      <p class="quiz-feedback" data-quiz-feedback="11" hidden></p>
+    </div>
+    <div class="quiz-question" data-quiz="12">
+      <p class="quiz-text">Blast Radius придерживает опасную команду. Чем это отличается от запрета?</p>
+      <div class="quiz-options">
+        <label><input type="radio" name="q12" value="wrong"> Ничем</label>
+        <label><input type="radio" name="q12" value="right"> Это страховка: мод читает только текст команды, а запретить наверняка можно правилами разрешений</label>
+        <label><input type="radio" name="q12" value="wrong"> Он блокирует всё без исключений</label>
+      </div>
+      <button type="button" class="quiz-check" data-quiz-check="12">Проверить</button>
+      <p class="quiz-feedback" data-quiz-feedback="12" hidden></p>
+    </div>
   </div>
-  <p class="quiz-score-box fade" id="quiz-score" style="margin-top:18px">Отвечено: 0 / 9</p>
+  <p class="quiz-score-box fade" id="quiz-score" style="margin-top:18px">Отвечено: 0 / 12</p>
 </section>
 
 <!-- ══════════ ЗАКЛЮЧЕНИЕ ══════════ -->
@@ -1276,6 +1613,7 @@ python scripts/run_demo.py retail</pre>
     <li><strong>Раз в месяц — учебная тревога</strong>: непроверенная копия — это надежда.</li>
     <li><strong>Проекты защищаются версиями, ключами и лимитами</strong>: проверить версии, закрыть сертификаты, поставить лимиты трат, заменить утёкшие ключи, включить Dependabot.</li>
     <li><strong>GitHub — сейф</strong>: приватный репозиторий по умолчанию, .gitignore до первого коммита, публикация только после проверки на секреты.</li>
+    <li><strong>Мод — это чужой код с вашими правами</strong>: проверка <code>claude plugin validate</code>, чтение <code>calls:</code>, свой мод и свои моды в приватном репозитории; выключатель всегда под рукой.</li>
     <li><strong>Чужое ставьте по порядку</strong>: прочитать README и скрипты, взять тег, запустить в песочнице, без рабочих ключей.</li>
   </ol>
 </section>
@@ -1284,7 +1622,7 @@ python scripts/run_demo.py retail</pre>
 
 <footer>
   <p>Учебная страница · Шандалин Д. А. · <a href="https://github.com/SmooL-G/shandalin-card" target="_blank" rel="noopener">визитка</a> · <a href="https://t.me/smitAnin" target="_blank" rel="noopener">@smitAnin</a> · 2026</p>
-  <p>Правила, версии, цены и состояние репозиториев меняются — сверяйтесь с официальными страницами. Страница не является юридической или финансовой консультацией. Оценки репозиториев сделаны по их описанию, без запуска.</p>
+  <p>Правила, версии, цены и состояние репозиториев меняются — сверяйтесь с официальными страницами. Страница не является юридической или финансовой консультацией. Оценки репозиториев и описание модов сделаны по документации и описаниям, без запуска на вашем компьютере.</p>
 </footer>
 
 <script>
