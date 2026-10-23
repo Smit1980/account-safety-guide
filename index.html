@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Как не потерять аккаунт Claude и Codex — учебная страница</title>
+<meta name="description" content="Учебная страница: почему блокируют аккаунты Claude и Codex, как не потерять работу, что делать в первые сутки после бана и как собрать «умную папку» с контекстом.">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f0f2f7;--card:#ffffff;--border:#e2e8f0;
+  --indigo:#6366f1;--indigo-dk:#4338ca;--indigo-lt:#eef2ff;
+  --cyan:#0ea5e9;--cyan-lt:#e0f2fe;
+  --amber:#f59e0b;--amber-lt:#fffbeb;
+  --green:#16a34a;--green-lt:#f0fdf4;
+  --red:#dc2626;--red-lt:#fef2f2;
+  --text:#0f172a;--muted:#64748b;--nav-h:56px;
+}
+html{scroll-behavior:smooth;background:var(--bg);scroll-padding-top:70px}
+body{
+  font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
+  background:
+    radial-gradient(circle at 12% 0%,rgba(99,102,241,.14),transparent 32%),
+    radial-gradient(circle at 85% 6%,rgba(14,165,233,.13),transparent 34%),
+    linear-gradient(180deg,#f8fafc 0%,#eef2ff 30%,#f8fafc 100%);
+  color:var(--text);line-height:1.65;overflow-x:hidden;
+}
+nav.top{position:fixed;top:0;left:0;right:0;height:var(--nav-h);background:rgba(255,255,255,.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);box-shadow:0 1px 10px rgba(0,0,0,.06);display:flex;align-items:center;padding:0 20px;z-index:900;gap:2px;overflow-x:auto;scrollbar-width:none}
+nav.top::-webkit-scrollbar{display:none}
+.nav-logo{font-weight:900;font-size:.93rem;color:var(--indigo-dk);white-space:nowrap;margin:0 10px 0 4px;flex-shrink:0}
+.nav-sep{width:1px;height:18px;background:var(--border);margin:0 6px;flex-shrink:0}
+.nav-link{padding:5px 10px;border-radius:6px;font-size:.75rem;font-weight:700;color:var(--muted);text-decoration:none;white-space:nowrap;transition:color .2s,background .2s;flex-shrink:0}
+.nav-link:hover,.nav-link.active{color:var(--indigo);background:var(--indigo-lt)}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--indigo);outline-offset:2px}
+
+#hero{min-height:88vh;padding:calc(var(--nav-h) + 56px) 24px 56px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.hero-badges{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:22px}
+.hero-badge{padding:5px 14px;background:var(--indigo-lt);border:1px solid #c7d2fe;border-radius:100px;font-size:.78rem;font-weight:700;color:var(--indigo-dk)}
+.hero-title{font-size:clamp(2rem,5.5vw,3.6rem);font-weight:900;line-height:1.12;letter-spacing:-1.5px;margin-bottom:16px;max-width:900px}
+.hero-title em{color:var(--indigo);font-style:normal}
+.hero-sub{font-size:1.05rem;color:var(--muted);max-width:680px;margin-bottom:32px}
+.hero-nav{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:820px}
+.hero-nav a{padding:8px 16px;border-radius:10px;background:var(--card);border:1px solid var(--border);font-size:.82rem;font-weight:600;color:var(--text);text-decoration:none;box-shadow:0 2px 8px rgba(15,23,42,.05);transition:transform .15s,box-shadow .15s}
+.hero-nav a:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(99,102,241,.15)}
+
+.sec{max-width:1080px;margin:0 auto;padding:64px 24px}
+.sec-head{margin-bottom:30px}
+.num-badge{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:13px;font-size:1.1rem;font-weight:900;color:#fff;margin-bottom:14px}
+.n1{background:linear-gradient(135deg,#6366f1,#818cf8)}
+.n2{background:linear-gradient(135deg,#0ea5e9,#38bdf8)}
+.n3{background:linear-gradient(135deg,#8b5cf6,#a78bfa)}
+.n4{background:linear-gradient(135deg,#16a34a,#4ade80)}
+.n5{background:linear-gradient(135deg,#f59e0b,#fbbf24)}
+.n6{background:linear-gradient(135deg,#ec4899,#f472b6)}
+.n7{background:linear-gradient(135deg,#dc2626,#f87171)}
+.n8{background:linear-gradient(135deg,#0891b2,#22d3ee)}
+.n9{background:linear-gradient(135deg,#4338ca,#6366f1)}
+.sec-title{font-size:clamp(1.5rem,3vw,2.2rem);font-weight:800;letter-spacing:-.5px;margin-bottom:10px}
+.sec-desc{font-size:1rem;color:var(--muted);max-width:780px;line-height:1.75}
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px;box-shadow:0 2px 10px rgba(15,23,42,.04)}
+.card p+p{margin-top:8px}
+.stack>*+*{margin-top:16px}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.grid .c-name{font-weight:800;margin-bottom:8px;font-size:.96rem}
+.grid p:not(.c-name){color:var(--muted);font-size:.88rem;line-height:1.6}
+
+.stat{text-align:center}
+.stat b{display:block;font-size:clamp(1.6rem,3.5vw,2.3rem);font-weight:900;color:var(--indigo-dk);letter-spacing:-1px}
+.stat span{color:var(--muted);font-size:.85rem}
+
+.note-callout{background:var(--indigo-lt);border:1px solid #c7d2fe;border-radius:14px;padding:16px 20px;margin-top:18px}
+.note-callout p{color:var(--indigo-dk);font-size:.93rem;line-height:1.7}
+.warn-callout{background:var(--amber-lt);border:1px solid #fcd34d;border-radius:16px;padding:18px 22px;margin-top:18px}
+.warn-callout p{color:#78350f;line-height:1.7;font-size:.93rem}
+.danger-callout{background:var(--red-lt);border:1px solid #fecaca;border-radius:16px;padding:18px 22px;margin-top:18px}
+.danger-callout p{color:#7f1d1d;line-height:1.7;font-size:.93rem}
+.ok-callout{background:var(--green-lt);border:1px solid #bbf7d0;border-radius:16px;padding:18px 22px;margin-top:18px}
+.ok-callout p{color:#14532d;line-height:1.7;font-size:.93rem}
+.callout strong,.note-callout strong,.warn-callout strong,.danger-callout strong,.ok-callout strong{display:block;margin-bottom:2px}
+
+table{width:100%;border-collapse:collapse;font-size:.9rem;background:var(--card);border-radius:14px;overflow:hidden;border:1px solid var(--border)}
+th,td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--border);vertical-align:top}
+th{background:#f8fafc;font-size:.75rem;text-transform:uppercase;letter-spacing:.6px;color:var(--muted)}
+tr:last-child td{border-bottom:none}
+.tbl-wrap{overflow-x:auto}
+
+.steps{list-style:none;counter-reset:st;display:flex;flex-direction:column;gap:12px}
+.steps li{counter-increment:st;position:relative;padding:14px 16px 14px 56px;background:var(--card);border:1px solid var(--border);border-radius:14px}
+.steps li::before{content:counter(st);position:absolute;left:14px;top:12px;width:30px;height:30px;border-radius:50%;background:var(--indigo);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center}
+.dosdonts{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+.dosdonts ul{list-style:none;display:flex;flex-direction:column;gap:8px;font-size:.92rem}
+.dosdonts li{padding-left:24px;position:relative}
+.yes li::before{content:"✓";position:absolute;left:0;color:var(--green);font-weight:900}
+.no li::before{content:"✕";position:absolute;left:0;color:var(--red);font-weight:900}
+code{background:#eef2ff;color:var(--indigo-dk);padding:1px 6px;border-radius:5px;font-size:.88em}
+.tree{background:#0f172a;color:#e2e8f0;border-radius:14px;padding:18px 20px;font-family:Consolas,monospace;font-size:.85rem;line-height:1.7;overflow-x:auto;white-space:pre}
+
+.prompt-box{background:#0f172a;border-radius:14px;overflow:hidden;margin-top:16px}
+.prompt-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 16px;background:#1e293b;color:#e2e8f0;font-size:.82rem;font-weight:700}
+.copy-btn{padding:5px 12px;border-radius:8px;border:1px solid #475569;background:transparent;color:#e2e8f0;font-size:.76rem;font-weight:700;cursor:pointer;flex-shrink:0}
+.copy-btn:hover{background:#334155}
+.prompt-box pre{margin:0;padding:18px 16px;color:#e2e8f0;font-size:.82rem;line-height:1.6;overflow-x:auto;white-space:pre-wrap;word-break:break-word;font-family:Consolas,monospace}
+
+.checklist-progress-bar{height:10px;border-radius:100px;background:var(--indigo-lt);overflow:hidden;margin-bottom:20px}
+.checklist-progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--indigo),var(--cyan));border-radius:100px;transition:width .3s ease}
+.checklist-items{list-style:none;display:flex;flex-direction:column;gap:12px}
+.checklist-items label{display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:.95rem}
+.checklist-items input{width:18px;height:18px;margin-top:3px;accent-color:var(--indigo);cursor:pointer;flex-shrink:0}
+.checklist-done{margin-top:18px;padding:12px 16px;background:var(--green-lt);color:var(--green);border-radius:10px;font-weight:700}
+
+.quiz{display:flex;flex-direction:column;gap:18px}
+.quiz-question{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px 22px}
+.quiz-text{font-weight:700;margin-bottom:12px}
+.quiz-options{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
+.quiz-options label{display:flex;align-items:flex-start;gap:8px;font-size:.92rem;cursor:pointer}
+.quiz-options label.quiz-correct-answer{color:var(--green);font-weight:700}
+.quiz-options input{accent-color:var(--indigo);margin-top:5px}
+.quiz-check{padding:8px 16px;border-radius:9px;border:none;background:var(--indigo);color:#fff;font-weight:700;font-size:.82rem;cursor:pointer}
+.quiz-check:hover{background:var(--indigo-dk)}
+.quiz-check:disabled{opacity:.5;cursor:default}
+.quiz-feedback{margin-top:12px;padding:10px 14px;border-radius:8px;font-size:.9rem}
+.quiz-feedback.correct{background:var(--green-lt);color:var(--green)}
+.quiz-feedback.incorrect{background:var(--red-lt);color:var(--red)}
+.quiz-score-box{text-align:center;font-weight:800;color:var(--indigo-dk)}
+
+.conclusion-list{list-style:none;counter-reset:concl;display:flex;flex-direction:column;gap:14px;margin-bottom:28px}
+.conclusion-list li{counter-increment:concl;padding-left:38px;position:relative;font-size:1rem}
+.conclusion-list li::before{content:counter(concl);position:absolute;left:0;top:-2px;width:26px;height:26px;border-radius:50%;background:var(--indigo);color:#fff;font-size:.8rem;font-weight:800;display:flex;align-items:center;justify-content:center}
+.verdict{margin-top:14px;font-weight:700;color:var(--indigo-dk)}
+.svc-link{color:var(--indigo);font-weight:700;text-decoration:underline;text-underline-offset:2px}
+
+.fade{opacity:0;transform:translateY(18px);transition:opacity .55s ease,transform .55s ease}
+.fade.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.fade{opacity:1;transform:none;transition:none}}
+@media (max-width:900px){.sec{padding:48px 16px}}
+footer{text-align:center;padding:32px 20px 48px;color:var(--muted);font-size:.85rem;max-width:800px;margin:0 auto}
+footer p+p{margin-top:8px}
+</style>
+</head>
+<body>
+
+<nav class="top" aria-label="Навигация по странице">
+  <span class="nav-logo">Не потерять аккаунт</span>
+  <span class="nav-sep"></span>
+  <a class="nav-link" href="#s1">Картина</a>
+  <a class="nav-link" href="#s2">Правила</a>
+  <a class="nav-link" href="#s3">За что банят</a>
+  <a class="nav-link" href="#s4">Привычки</a>
+  <a class="nav-link" href="#s5">Копии</a>
+  <a class="nav-link" href="#s6">Умная папка</a>
+  <a class="nav-link" href="#s7">Если бан</a>
+  <a class="nav-link" href="#s8">По ключу</a>
+  <a class="nav-link" href="#s9">Codex</a>
+  <a class="nav-link" href="#checklist">Чек-лист</a>
+  <a class="nav-link" href="#quiz">Квиз</a>
+</nav>
+
+<header id="hero">
+  <div class="hero-badges">
+    <span class="hero-badge">Учебная страница</span>
+    <span class="hero-badge">Claude · Claude Code · Codex</span>
+    <span class="hero-badge">~25 минут</span>
+  </div>
+  <h1 class="hero-title">Как не потерять <em>аккаунт</em> — и тем более работу</h1>
+  <p class="hero-sub">Аккаунт в облачном ИИ — это арендованная комната. Работа, контекст и решения должны жить у вас на диске. Здесь собраны главные тезисы, пошаговая инструкция и сценарий «что делать, если всё-таки заблокировали».</p>
+  <nav class="hero-nav" aria-label="Разделы страницы">
+    <a href="#s1">Цифры</a>
+    <a href="#s3">Причины блокировок</a>
+    <a href="#s5">Копии и экспорт</a>
+    <a href="#s6">Умная папка</a>
+    <a href="#s7">План на первые сутки</a>
+    <a href="#quiz">Проверить себя</a>
+  </nav>
+</header>
+
+<main>
+
+<!-- ══════════ 1: КАРТИНА ══════════ -->
+<section class="sec" id="s1">
+  <div class="sec-head fade">
+    <div class="num-badge n1">1</div>
+    <h2 class="sec-title">Масштаб: апелляция — не план</h2>
+    <p class="sec-desc">По отчёту Anthropic Transparency Hub (обновление от 23 июля 2026, период январь–июнь 2026) блокировки носят массовый характер. Цифры ниже приведены по материалу-источнику; перед ссылкой на них сверьтесь с <a class="svc-link" href="https://www.anthropic.com/transparency/system-trust-reporting" target="_blank" rel="noopener">первоисточником</a>.</p>
+  </div>
+  <div class="grid fade">
+    <div class="card stat"><b>11,4 млн</b><span>заблокированных аккаунтов за полугодие</span></div>
+    <div class="card stat"><b>398 тыс.</b><span>поданных апелляций</span></div>
+    <div class="card stat"><b>42 тыс.</b><span>удовлетворённых апелляций (≈10,6 %)</span></div>
+    <div class="card stat"><b>0,37 %</b><span>аккаунтов возвращается от общего числа банов</span></div>
+  </div>
+  <div class="note-callout fade">
+    <p><strong>Как читать цифры</strong>Каждую десятую поданную апелляцию удовлетворяют, но подаёт её малая часть заблокированных. От всех банов возврат — меньше четырёх человек из тысячи. Цифра 1,45 млн, которая ходит в обзорах, относится к прошлому периоду (вторая половина 2025).</p>
+  </div>
+  <p class="verdict fade">Вывод: надёжный план — это заранее сделанные копии и контекст на диске, а не надежда на разбан.</p>
+</section>
+
+<!-- ══════════ 2: ПРАВИЛА ══════════ -->
+<section class="sec" id="s2">
+  <div class="sec-head fade">
+    <div class="num-badge n2">2</div>
+    <h2 class="sec-title">Правила, которые нужно знать</h2>
+    <p class="sec-desc">Обновлённая Usage Policy Anthropic (анонс от 8 октября, новые правила действуют с 12 ноября 2026) ужесточает ключевые пункты.</p>
+  </div>
+  <div class="grid fade">
+    <div class="card"><p class="c-name">Поддерживаемые страны 🌍</p><p>Пользоваться Claude можно только физически находясь в стране из <a class="svc-link" href="https://www.anthropic.com/supported-countries" target="_blank" rel="noopener">официального списка</a>. Для OpenAI свой список: <a class="svc-link" href="https://platform.openai.com/docs/supported-countries" target="_blank" rel="noopener">supported countries</a>.</p></div>
+    <div class="card"><p class="c-name">Запрет перепродажи 🚫</p><p>Нельзя перепродавать или «проксировать» доступ к Claude через подписки: готовые аккаунты, общий доступ, сервисы, пропускающие запросы через чужие подписки.</p></div>
+    <div class="card"><p class="c-name">Только свои карты 💳</p><p>Запрещено платить чужими, поддельными или неразрешёнными картами.</p></div>
+    <div class="card"><p class="c-name">Один бан — не повод начинать заново 🔁</p><p>Заводить новый аккаунт, чтобы обойти блокировку, запрещено, и системы связывают аккаунты по совокупности признаков.</p></div>
+  </div>
+  <div class="danger-callout fade">
+    <p><strong>Честная оговорка</strong>Сам материал-источник прямо признаёт: использование сервиса из неподдерживаемой страны нарушает правила, а максимальная санкция — блокировка аккаунта. Гарантий не даёт ни один способ. Поэтому на этой странице <b>нет</b> инструкций по маскировке местоположения, покупке чужих номеров и аккаунтов, обходу проверок и оплате через посредников: это ровно то, что повышает риск и нарушает условия. Здесь — то, что защищает вашу работу независимо от региона.</p>
+  </div>
+  <div class="warn-callout fade">
+    <p><strong>Про законность</strong>VPN как технология в России не запрещён; отвечают не за инструмент, а за то, что через него делают (например, ст. 13.53 КоАП с 1 сентября 2025 — поиск экстремистских материалов, штраф 3–5 тыс. руб.). Это справка из источника, а не юридическая консультация.</p>
+  </div>
+</section>
+
+<!-- ══════════ 3: ЗА ЧТО БАНЯТ ══════════ -->
+<section class="sec" id="s3">
+  <div class="sec-head fade">
+    <div class="num-badge n3">3</div>
+    <h2 class="sec-title">За что блокируют: общая логика</h2>
+    <p class="sec-desc">Точную механику Anthropic не раскрывает. Но у подобных систем одна логика: чем больше параметров не сходятся между собой, тем выше шанс, что аккаунтом заинтересуются. Страна, оплата и поведение должны рассказывать одну историю.</p>
+  </div>
+  <div class="grid fade">
+    <div class="card"><p class="c-name">Географический рассинхрон</p><p>Адрес одной страны, часовой пояс другой, язык системы третьей — всё видно сразу.</p></div>
+    <div class="card"><p class="c-name">Скачущий адрес</p><p>Утром одна страна, вечером другая. Ни один живой человек так не перемещается.</p></div>
+    <div class="card"><p class="c-name">Оплата не сходится с профилем</p><p>По наблюдениям автора — самая частая причина: десятки аккаунтов с одной карты, карта в чёрном списке, платёж в момент сбоя соединения.</p></div>
+    <div class="card"><p class="c-name">Подписочный токен в сторонних программах</p><p>OAuth-токен — это ключ от подписки. С апреля 2026 подписки Pro и Max официально не покрывают сторонние инструменты. Автоматизация — только через официальный API со своим ключом.</p></div>
+    <div class="card"><p class="c-name">Один аккаунт на двоих</p><p>Два человека — два адреса и два устройства. Бан получают оба аккаунта или единственный общий.</p></div>
+    <div class="card"><p class="c-name">Поведение</p><p>Десятки однотипных запросов подряд без пауз, странные часы активности относительно заявленной страны.</p></div>
+    <div class="card"><p class="c-name">Нарушающий контент</p><p>За контент против правил банят независимо от настроек доступа и способа оплаты.</p></div>
+  </div>
+
+  <div class="tbl-wrap fade" style="margin-top:22px">
+    <table>
+      <thead><tr><th>Когда</th><th>Что ужесточилось</th></tr></thead>
+      <tbody>
+        <tr><td>Сентябрь 2025</td><td>Правило 50 % ownership: компании, более чем наполовину принадлежащие лицам из РФ, Китая или Ирана, лишены доступа независимо от страны регистрации</td></tr>
+        <tr><td>Октябрь 2025</td><td>Верификация по телефону; российские номера не принимаются</td></tr>
+        <tr><td>Январь 2026</td><td>Отчёт: 1,45 млн банов за второе полугодие 2025</td></tr>
+        <tr><td>Апрель 2026</td><td>Подписки Pro и Max не покрывают сторонние инструменты</td></tr>
+        <tr><td>Июль 2026</td><td>Отчёт: 11,4 млн банов за первое полугодие 2026</td></tr>
+        <tr><td>12 ноября 2026</td><td>Новая Usage Policy: запрет перепродажи, чужих карт, пользования из неподдерживаемых стран</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ══════════ 4: ПРИВЫЧКИ ══════════ -->
+<section class="sec" id="s4">
+  <div class="sec-head fade">
+    <div class="num-badge n4">4</div>
+    <h2 class="sec-title">Ежедневные привычки</h2>
+    <p class="sec-desc">Нарушают правила обычно не по незнанию, а «один разочек, быстро проверить». Именно он и ловится.</p>
+  </div>
+  <div class="dosdonts fade">
+    <div class="card yes"><p class="c-name" style="font-weight:800;margin-bottom:10px">Можно и нужно</p>
+      <ul>
+        <li>Обычная ежедневная работа и официальный Claude Code</li>
+        <li>Один человек — один аккаунт — одно основное устройство</li>
+        <li>Автоматизация через официальный API и собственный ключ</li>
+        <li>Держать запас по лимитам (не выбирать до 100 %)</li>
+        <li>Платить только своей картой и только за один аккаунт</li>
+        <li>Брать Pro, а Max — когда действительно упираетесь в лимиты</li>
+        <li>Платить помесячно: при блокировке остаток периода почти не возвращают</li>
+      </ul>
+    </div>
+    <div class="card no"><p class="c-name" style="font-weight:800;margin-bottom:10px">Нельзя</p>
+      <ul>
+        <li>Отдавать аккаунт другому человеку</li>
+        <li>Вставлять токен подписки в сторонние программы и боты</li>
+        <li>Слать десятки однотипных запросов подряд без пауз</li>
+        <li>Менять карту или тариф «на бегу», в неделю списания</li>
+        <li>Публиковать контент, нарушающий правила</li>
+        <li>Паниковать и логиниться по десять раз — каждая попытка лишний флаг</li>
+        <li>Хранить в аккаунте единственную копию важной работы</li>
+      </ul>
+    </div>
+  </div>
+  <div class="grid fade" style="margin-top:16px">
+    <div class="card"><p class="c-name">Продление без резких движений</p><p>За 2–3 дня до списания проверьте баланс карты. В неделю списания ничего не меняйте. Если списание не прошло — не предпринимайте ничего: платёжная система повторит попытку сама, серия ручных попыток — триггер.</p></div>
+    <div class="card"><p class="c-name">Гигиена файлов</p><p>PDF и DOCX хранят внутри метаданные (программа, язык, иногда геолокация). Перед загрузкой в чужой сервис чистите их, например через <a class="svc-link" href="https://exiftool.org/" target="_blank" rel="noopener">ExifTool</a>.</p></div>
+    <div class="card"><p class="c-name">Настройки приватности</p><p>В Claude: Settings → Privacy → Location metadata — выключите, если не хотите передавать примерный город. Автозапуск приложения со стартом ПК не включайте: оно может стартовать раньше, чем поднимется сетевой фильтр.</p></div>
+    <div class="card"><p class="c-name">Опасные «установщики»</p><p>Команды вида «вставь строку в терминал, и всё настроится» скачивают чужой скрипт и запускают с вашими правами. Сначала откройте ссылку и прочитайте скрипт; не понимаете — попросите агента объяснить построчно.</p></div>
+  </div>
+</section>
+
+<!-- ══════════ 5: КОПИИ ══════════ -->
+<section class="sec" id="s5">
+  <div class="sec-head fade">
+    <div class="num-badge n5">5</div>
+    <h2 class="sec-title">Копии: что сохранять и куда</h2>
+    <p class="sec-desc">Копии — единственная часть защиты, которая работает, даже если всё остальное не сработало. Делаются до бана, а не после.</p>
+  </div>
+  <div class="card fade">
+    <p><b>Раз в неделю, десять минут:</b></p>
+    <ol class="steps" style="margin-top:12px">
+      <li>claude.ai → аватар → Settings → Privacy → <b>Export data</b>. Архив с чатами придёт на почту.</li>
+      <li>Самое важное дополнительно копируйте в обычный документ на диске: архив экспорта — машинный формат, читать его нечем.</li>
+      <li>Файлы CLAUDE.md и навыки (skills) храните локально и, лучше, под контролем версий.</li>
+      <li>Запишите «связку»: аккаунт, почта, дата регистрации, чем платили — отдельным файлом на своём диске (без паролей).</li>
+    </ol>
+  </div>
+
+  <div class="card fade" style="margin-top:16px">
+    <p class="c-name" style="font-weight:800">Где что лежит у Claude Code</p>
+    <div class="tbl-wrap" style="margin-top:10px">
+    <table>
+      <thead><tr><th>Путь</th><th>Что внутри</th></tr></thead>
+      <tbody>
+        <tr><td><code>~/.claude/projects/</code></td><td>Диалоги и автопамять по каждому проекту. Лежит не в папке проекта — копия проекта её не включает</td></tr>
+        <tr><td><code>~/.claude/skills/</code></td><td>Ваши навыки</td></tr>
+        <tr><td><code>~/.claude/settings.json</code></td><td>Настройки</td></tr>
+        <tr><td><code>~/.claude.json</code></td><td>Отдельный файл рядом с папкой; среди прочего — подключения (MCP)</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <div class="warn-callout fade">
+    <p><strong>Тихое удаление</strong>По умолчанию Claude Code хранит локальные диалоги 30 дней и удаляет их молча. Параметр <code>cleanupPeriodDays</code> (<a class="svc-link" href="https://code.claude.com/docs/en/sessions" target="_blank" rel="noopener">документация</a>) продлевает срок; для приложения на компьютере есть отдельный <code>desktopSessionCleanupPeriodDays</code> (<a class="svc-link" href="https://code.claude.com/docs/en/settings-reference" target="_blank" rel="noopener">справочник настроек</a>). Уже удалённое так не вернуть.</p>
+  </div>
+
+  <div class="prompt-box fade">
+    <div class="prompt-head"><span>Промпт: продлить хранение диалогов</span><button type="button" class="copy-btn" data-copy="p-clean">Копировать</button></div>
+    <pre id="p-clean">Поставь в моих глобальных настройках Claude Code (~/.claude/settings.json)
+"cleanupPeriodDays": 365. Остальные настройки не трогай, проверь, что JSON
+остался корректным, и покажи итоговый фрагмент.</pre>
+  </div>
+  <div class="prompt-box fade">
+    <div class="prompt-head"><span>Промпт: архив локальных данных</span><button type="button" class="copy-btn" data-copy="p-arch">Копировать</button></div>
+    <pre id="p-arch">Сделай архив моих локальных данных Claude Code: папка ~/.claude целиком и файл
+~/.claude.json. Сохрани архив в папку «Копии Claude» в моих Документах, имя
+с сегодняшней датой. Покажи, где он лежит и сколько весит.</pre>
+  </div>
+  <div class="prompt-box fade">
+    <div class="prompt-head"><span>Промпты: забрать то, что не попадает в экспорт</span><button type="button" class="copy-btn" data-copy="p-skills">Копировать</button></div>
+    <pre id="p-skills">Найди все мои скиллы. Собери их в один архив и пришли мне его в этот чат.
+Покажи список всех собранных скиллов для проверки.
+
+---
+
+Выведи всё, что ты обо мне помнишь, полностью, и пришли дополнительно файлом.</pre>
+  </div>
+  <div class="danger-callout fade">
+    <p><strong>Осторожно с секретами</strong>В диалогах бывают ключи, пароли и данные клиентов. Не кладите такой архив в общий облачный документ — только на свой диск или носитель.</p>
+  </div>
+</section>
+
+<!-- ══════════ 6: УМНАЯ ПАПКА ══════════ -->
+<section class="sec" id="s6">
+  <div class="sec-head fade">
+    <div class="num-badge n6">6</div>
+    <h2 class="sec-title">Умная папка: бан не стоит вам работы</h2>
+    <p class="sec-desc">Экспорт спасает прошлое — тексты переписки. Работу спасает <b>контекст</b>: ваш тон, принятые решения и их причины. Либо он записан в файлы, либо потерян навсегда.</p>
+  </div>
+
+  <div class="note-callout fade" style="margin-top:0">
+    <p><strong>Идея в одном предложении</strong>Модель остаётся в облаке, контекст переезжает к вам на диск. Заблокировали аккаунт — закрылось одно окно, папка осталась; откройте другого агента, покажите ему ту же папку — работа продолжается.</p>
+  </div>
+
+  <div class="card fade" style="margin-top:16px">
+    <p class="c-name" style="font-weight:800">Нулевой шаг: где вы работаете</p>
+    <p>Обычный чат живёт целиком в облаке: закрылся аккаунт — закрылся доступ. Режимы, которые работают с файлами на вашем диске (в Claude это Cowork и Код), кладут результат к вам в папку сразу. <b>Чат — для коротких обсуждений, всё рабочее — в режимах с файлами.</b> Если пишете код — заведите приватный репозиторий на GitHub и сохраняйте туда после каждого этапа.</p>
+  </div>
+
+  <div class="tree fade" style="margin-top:16px">моя-база/
+├── AGENTS.md          — конституция: правила, читает любой агент
+├── CLAUDE.md          — строка @AGENTS.md + специфика Claude Code
+├── ВОССТАНОВЛЕНИЕ.md  — промпт восстановления, лежит здесь же, не в закладках
+├── docs/
+│   ├── КОНТЕКСТ.md    — кто вы и над чем работаете
+│   ├── РЕШЕНИЯ.md     — каждое решение с датой И ПРИЧИНОЙ
+│   └── ИЗМЕНЕНИЯ.md   — короткая хронология
+└── логи/
+    └── ГГГГ-ММ-ДД.md  — файл на каждый рабочий день, пишет агент</div>
+
+  <div class="grid fade" style="margin-top:16px">
+    <div class="card"><p class="c-name">Почему два файла правил</p><p>Codex читает <code>AGENTS.md</code>, Claude Code — <code>CLAUDE.md</code>. Одинаковый текст в двух файлах через месяц разойдётся. Решение: <code>CLAUDE.md</code> содержит строку <code>@AGENTS.md</code> (официальный импорт, <a class="svc-link" href="https://code.claude.com/docs/en/memory" target="_blank" rel="noopener">документация</a>) и пару строк специфики.</p></div>
+    <div class="card"><p class="c-name">«Почему», а не «что»</p><p>Что сделано — видно по файлам. Почему выбрали именно так — не восстановить ниоткуда, кроме записи. Плохо: «поправил тексты». Хорошо: «убрал блок с ценами — клиенты уходили, не дочитав; цену показываем после расчёта».</p></div>
+    <div class="card"><p class="c-name">Защита — это автоматика</p><p>Резервная копия «по напоминанию» — надежда на память. Правило «в конце сессии записать лог и сделать коммит» вписано в AGENTS.md один раз и работает без вас.</p></div>
+  </div>
+
+  <h3 style="margin:28px 0 12px" class="fade">Как собрать — по шагам</h3>
+  <ol class="steps fade">
+    <li>Создайте пустую папку на диске с понятным именем.</li>
+    <li>Откройте её в Claude Code или Codex как рабочую.</li>
+    <li>Отправьте промпт сборки (ниже) — он создаёт всю структуру за один проход.</li>
+    <li>Заполните <code>docs/КОНТЕКСТ.md</code> своими словами — это единственное, что агент не может придумать за вас.</li>
+    <li>Отдельным сообщением: «возьми папку под контроль версий и зафиксируй текущую версию». Без этого правило «закоммитить в конце сессии» невыполнимо.</li>
+    <li>Наберите <code>/context</code>: CLAUDE.md должен быть виден среди файлов памяти. Нет в списке — агент работает вслепую.</li>
+  </ol>
+
+  <div class="prompt-box fade">
+    <div class="prompt-head"><span>Промпт сборки папки — копировать целиком</span><button type="button" class="copy-btn" data-copy="p-build">Копировать</button></div>
+    <pre id="p-build">Собери в этой папке личную базу знаний и рабочий контекст — так, чтобы если
+я завтра сменю тебя на другого агента, он поднял мою работу за одну минуту
+из одних только файлов, без единого моего объяснения.
+
+Создай в КОРНЕ этой папки (не во вложенной подпапке) такую структуру:
+
+1. AGENTS.md — конституция проекта. Читается любым агентом при старте сессии.
+   Включи в него:
+   - что это за папка и зачем она нужна (модель в облаке, контекст — здесь)
+   - главное правило: источник правды — файлы в этой папке, а не история чата
+   - что делать в начале сессии (прочитать docs/КОНТЕКСТ.md и последние логи)
+   - что делать по ходу (новое решение — сразу в docs/РЕШЕНИЯ.md, с датой
+     и ПРИЧИНОЙ, не только формулировкой)
+   - что делать в конце сессии (дополнить сегодняшний файл в логи/,
+     закоммитить в git)
+   - явное правило: в логах писать «почему», а не «что» — потому что «что»
+     видно по файлам, а причина решения нигде больше не сохраняется
+   - границы: ничего не удалять без подтверждения, ключи и пароли в файлы
+     не записывать, перед публикацией куда-либо — спросить
+   - ссылку в конце: «если контекст потерян — открой ВОССТАНОВЛЕНИЕ.md»
+
+2. CLAUDE.md — ОДНА строка @AGENTS.md (это официальный синтаксис импорта
+   Anthropic, он подтягивает AGENTS.md целиком) и до трёх строк того, что
+   касается только Claude Code (например: отвечать по-русски, крупные задачи
+   через Plan Mode, правки показывать диффом). НЕ дублируй в этот файл текст
+   из AGENTS.md — только импорт и то, чего в AGENTS.md нет.
+
+3. docs/КОНТЕКСТ.md — кто я и над чем работаю. Оставь плейсхолдеры-вопросы,
+   я отвечу сам: кто я, чем занимаюсь, кто моя аудитория, как правильно со мной
+   работать, что сейчас в работе, чего в этой папке быть не должно.
+
+4. docs/РЕШЕНИЯ.md — пустой файл с заголовком и инструкцией: каждая запись —
+   дата, решение и ПРИЧИНА, новые записи добавляются сверху.
+
+5. docs/ИЗМЕНЕНИЯ.md — короткая хронология, пустой файл с заголовком.
+
+6. логи/ — пустая папка. Объясни в AGENTS.md, что файлы сюда добавляются
+   по одному на рабочий день, имя файла — дата в формате ГГГГ-ММ-ДД.md.
+
+7. ВОССТАНОВЛЕНИЕ.md — в корне, рядом с AGENTS.md, НЕ внутри docs. Короткая
+   инструкция для меня-в-панике: что делать, если аккаунт заблокирован —
+   открыть любого агента, выбрать эту папку рабочей, вставить промпт
+   восстановления (я его добавлю сюда сам следующим сообщением).
+
+После того как всё создано — покажи мне дерево файлов и спроси, что заполнить
+в docs/КОНТЕКСТ.md, а не додумывай за меня.</pre>
+  </div>
+
+  <div class="warn-callout fade">
+    <p><strong>Проверьте, что собралось именно то</strong>Агент — не установщик и может отступить от инструкции. (1) Первая строка CLAUDE.md — <code>@AGENTS.md</code>, дальше 2–3 строки; иначе попросите оставить только импорт. (2) Файлы лежат прямо в выбранной папке, а не во вложенной. (3) В КОНТЕКСТ.md — вопросы к вам, а не выдуманные ответы. Пустая папка <code>логи/</code> в git не попадёт — попросите положить туда пустой <code>.gitkeep</code>. Через неделю проверьте, что в <code>логи/</code> есть файлы за каждый рабочий день.</p>
+  </div>
+
+  <h3 style="margin:28px 0 12px" class="fade">Восстановление за минуту</h3>
+  <ol class="steps fade">
+    <li>Откройте <b>другого</b> агента — не продолжение того же чата, а инструмент без вашей истории.</li>
+    <li>Выберите свою папку рабочей.</li>
+    <li>Отправьте промпт восстановления (он же лежит в <code>ВОССТАНОВЛЕНИЕ.md</code> внутри папки).</li>
+    <li>Агент читает: AGENTS.md → КОНТЕКСТ → РЕШЕНИЯ → ИЗМЕНЕНИЯ → три последних лога → историю git.</li>
+    <li>Отчёт по форме — с обязательным пунктом «чего я не нашёл»: модель по природе оптимистична и охотно придумает недостающее.</li>
+  </ol>
+
+  <div class="prompt-box fade">
+    <div class="prompt-head"><span>Промпт восстановления — положите в ВОССТАНОВЛЕНИЕ.md</span><button type="button" class="copy-btn" data-copy="p-rec">Копировать</button></div>
+    <pre id="p-rec">Ты подключаешься к папке, в которой лежит вся память моей работы.
+Истории нашей переписки у тебя нет — она осталась в другом месте и недоступна.
+Твоя задача — восстановить контекст из файлов, а не спрашивать меня.
+
+Сделай по порядку и ничего не пропускай:
+
+1. Прочитай AGENTS.md — это правила работы в этой папке.
+2. Прочитай docs/КОНТЕКСТ.md — кто я и над чем работаю.
+3. Прочитай docs/РЕШЕНИЯ.md — какие решения уже приняты и почему.
+4. Прочитай docs/ИЗМЕНЕНИЯ.md — что менялось в последнее время.
+5. Прочитай три последних файла из папки логи/ — чем закончились
+   последние сессии.
+6. Если подключён git — посмотри последние десять записей истории,
+   чтобы понять порядок событий.
+
+После этого отчитайся строго по этой форме:
+
+   ЧТО ЭТО ЗА ПРОЕКТ — два-три предложения своими словами.
+   ГДЕ МЫ ОСТАНОВИЛИСЬ — последнее состояние работы.
+   ПРИНЯТЫЕ РЕШЕНИЯ — три-пять главных, с причиной каждого.
+   ОТКРЫТЫЕ ХВОСТЫ — что осталось незакрытым.
+   ЧЕГО Я НЕ НАШЁЛ — файлы, которых нет или которые не читаются.
+
+Последний пункт обязателен. Если чего-то не хватает — так и скажи,
+не додумывай и не заполняй пробелы догадками.
+
+Пока я не подтвержу, что восстановление верное, ничего не меняй
+и не создавай новых файлов.</pre>
+  </div>
+  <div class="ok-callout fade">
+    <p><strong>Как проверить, что восстановление настоящее</strong>Отчёт — ещё не доказательство. Задайте контрольный вопрос, ответ на который есть только в ваших файлах (например, про решение из РЕШЕНИЯ.md с причиной). Ответил конкретно — контекст поднялся; обтекаемо — файлы не прочитаны, гоните по списку заново. <b>Учебная тревога раз в месяц:</b> пять минут, другой агент, тот же промпт. Не поднялось — чините сейчас, пока тревога учебная.</p>
+  </div>
+</section>
+
+<!-- ══════════ 7: ЕСЛИ БАН ══════════ -->
+<section class="sec" id="s7">
+  <div class="sec-head fade">
+    <div class="num-badge n7">7</div>
+    <h2 class="sec-title">Если заблокировали: первые сутки</h2>
+    <p class="sec-desc">Порядок: проверить сбой → забрать данные → один раз подать апелляцию → продолжить работу в другом инструменте.</p>
+  </div>
+  <ol class="steps fade">
+    <li><b>Проверьте <a class="svc-link" href="https://status.claude.com" target="_blank" rel="noopener">status.claude.com</a>.</b> При массовых сбоях аварию регулярно принимают за бан.</li>
+    <li><b>Не логиньтесь повторно десять раз.</b> Каждая попытка — дополнительный флаг.</li>
+    <li><b>Сразу выгрузите данные.</b> По официальной справке заблокированный пользователь Free/Pro/Max всё ещё может войти, чтобы выгрузить данные или удалить аккаунт. Срок, сколько это доступно, не указан — делайте сразу: Settings → Privacy → Export Data → период «за всё время».</li>
+    <li><b>Подайте апелляцию один раз.</b> Форма — по <a class="svc-link" href="https://support.claude.com/en/articles/8241253" target="_blank" rel="noopener">статье справки</a> после входа в заблокированный аккаунт. Ответ — от одной до трёх недель; десять одинаковых обращений ничего не ускорят.</li>
+    <li><b>Продолжайте работу</b> в другом агенте на вашей «умной папке» (раздел 6) или через API-ключ (раздел 8).</li>
+  </ol>
+
+  <div class="prompt-box fade">
+    <div class="prompt-head"><span>Шаблон апелляции (на английском, коротко и честно)</span><button type="button" class="copy-btn" data-copy="p-app">Копировать</button></div>
+    <pre id="p-app">Hello,
+My Claude account was disabled and I received the following message:
+"Your account has been disabled after an automatic review of your recent
+activities."
+I believe this may be a mistake and I would like to request a manual review
+of my account.
+I am a regular user with a paid subscription, and to the best of my knowledge
+I did not intentionally violate your Terms of Service or Usage Policy.
+Please review my account and let me know whether it can be restored. If not,
+I would appreciate any clarification about the reason for the disablement.
+Thank you.</pre>
+  </div>
+  <div class="warn-callout fade">
+    <p><strong>Правила апелляции</strong>Приложите скриншот ошибки. Не искажайте факты — проверить их проще, чем кажется. Помните арифметику: возвращают около 0,37 % от всех банов. Деньги за неиспользованный период обычно возвращают, но тому, кто платил.</p>
+  </div>
+  <div class="danger-callout fade">
+    <p><strong>Чего не делать</strong>Не заводите «новый аккаунт взамен»: правила запрещают обход блокировки, а связь аккаунтов определяется по совокупности признаков. Почти наверняка повторится и бан. Стопроцентного способа не существует — кто обещает обратное, либо не знает, либо продаёт. Стратегия: чтобы работа не жила внутри одного аккаунта.</p>
+  </div>
+</section>
+
+<!-- ══════════ 8: ПО КЛЮЧУ ══════════ -->
+<section class="sec" id="s8">
+  <div class="sec-head fade">
+    <div class="num-badge n8">8</div>
+    <h2 class="sec-title">План Б: работа по API-ключу</h2>
+    <p class="sec-desc">Чтобы терять было нечего, часть работы можно вести без подписочного аккаунта: вы платите за токены своим ключом и являетесь обычным клиентом API.</p>
+  </div>
+  <div class="grid fade">
+    <div class="card"><p class="c-name">Что это</p><p>Вместо подписки — ключ API. Подходит для кода и автоматизации. Нет чата, проектов и артефактов — для «поговорить» не годится.</p></div>
+    <div class="card"><p class="c-name">Claude Code по ключу</p><p>Через переменные окружения <code>ANTHROPIC_BASE_URL</code>, <code>ANTHROPIC_AUTH_TOKEN</code>, <code>ANTHROPIC_API_KEY</code> (пустой). Сохраняются правила, навыки и стиль работы Claude Code.</p></div>
+    <div class="card"><p class="c-name">Локальная модель</p><p>Без аккаунта, ключа и сети — модель на вашем компьютере. Нужна мощная машина, качество ниже облачного, зато зависимость исчезает полностью.</p></div>
+    <div class="card"><p class="c-name">Облачный сервер</p><p>Работа на арендованном сервере в стране, где сервис официально доступен: все параметры сходятся, потому что расходиться нечему. Дороже и дольше в настройке.</p></div>
+  </div>
+  <div class="warn-callout fade">
+    <p><strong>Выбирайте посредника осторожно</strong>С 12 ноября запрещены сервисы, перепродающие доступ через чужие подписки. Работайте напрямую по официальному API или через посредника, который официально платит за токены сам. Обещание «Claude по подписке дёшево» — именно запрещённая схема. Не путайте с разделом 3: бан грозит за подстановку подписочного токена в стороннюю программу, а не за работу по собственному API-ключу.</p>
+  </div>
+</section>
+
+<!-- ══════════ 9: CODEX ══════════ -->
+<section class="sec" id="s9">
+  <div class="sec-head fade">
+    <div class="num-badge n9">9</div>
+    <h2 class="sec-title">А как с Codex?</h2>
+    <p class="sec-desc">Механика проверок та же: смотрят, откуда зашли, чем заплатили и как себя ведёте. Три отличия.</p>
+  </div>
+  <div class="grid fade">
+    <div class="card"><p class="c-name">1. Нет публичной статистики</p><p>У Anthropic есть полугодовой отчёт с цифрами. У OpenAI — только страница о модерации и форма апелляции, без цифр. Любой процент «разбанов по Codex» взят с потолка.</p></div>
+    <div class="card"><p class="c-name">2. Жёстче условия</p><p>В условиях OpenAI: нельзя передавать данные аккаунта или делать его доступным другим; вы отвечаете за всё, что под ним происходит. Нельзя обходить ограничения и защитные меры.</p></div>
+    <div class="card"><p class="c-name">3. Один бан — на всё</p><p>С 9 июля 2026 Codex живёт внутри десктопного приложения ChatGPT. Один аккаунт — теряете и Codex, и чат, и историю, и проекты.</p></div>
+  </div>
+  <div class="tbl-wrap fade" style="margin-top:18px">
+    <table>
+      <thead><tr><th>Тариф ChatGPT</th><th>В месяц</th><th>Что по Codex</th></tr></thead>
+      <tbody>
+        <tr><td>Free</td><td>0 $</td><td>Попробовать, ограниченный доступ</td></tr>
+        <tr><td>Go</td><td>8 $</td><td>Больше доступа к флагманской модели</td></tr>
+        <tr><td>Plus</td><td>20 $</td><td>Расширенное использование, приложение Codex для компьютера</td></tr>
+        <tr><td>Pro</td><td>от 100 $</td><td>Максимум задач</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="note-callout fade">
+    <p><strong>Практический вывод</strong>Держите Claude и Codex раздельно: разные почты и устройства/профили, чтобы проблема одного не уронила другой. И в любом случае держите запасного агента на «умной папке»: на кого бы вы ни работали, регион и условия закрыты одинаково у обоих.</p>
+  </div>
+  <p class="verdict fade">Цены и лимиты быстро устаревают — проверяйте их на официальных страницах перед покупкой.</p>
+</section>
+
+<!-- ══════════ ЧЕК-ЛИСТ ══════════ -->
+<section class="sec" id="checklist">
+  <div class="sec-head fade">
+    <div class="num-badge n4">✓</div>
+    <h2 class="sec-title">Чек-лист «на сегодня»</h2>
+    <p class="sec-desc">Отметки сохраняются в вашем браузере — можно вернуться к списку позже.</p>
+  </div>
+  <div class="card fade">
+    <div class="checklist-progress-bar"><div class="checklist-progress-fill" id="checklist-progress"></div></div>
+    <ul class="checklist-items">
+      <li><label><input type="checkbox" data-checklist-item="c1"> Убедился, что пользуюсь сервисом там, где он официально доступен, и принимаю условия</label></li>
+      <li><label><input type="checkbox" data-checklist-item="c2"> Один человек — один аккаунт; ничей токен подписки не вставлен в сторонние программы</label></li>
+      <li><label><input type="checkbox" data-checklist-item="c3"> Оплата — только моя карта, помесячно, без резких смен в неделю списания</label></li>
+      <li><label><input type="checkbox" data-checklist-item="c4"> Сделал первый экспорт данных (Settings → Privacy → Export data) и поставил еженедельное напоминание</label></li>
+      <li><label><input type="checkbox" data-checklist-item="c5"> Выгрузил скиллы и «память» через промпты из раздела 5</label></li>
+      <li><label><input type="checkbox" data-checklist-item="c6"> Поставил cleanupPeriodDays = 365 в настройках Claude Code</label></li>
+      <li><label><input type="checkbox" data-checklist-item="c7"> Сделал архив ~/.claude и ~/.claude.json и убрал его в безопасное место (не в общий облачный документ)</label></li>
+      <li><label><input type="checkbox" data-checklist-item="c8"> Собрал «умную папку» по промпту и заполнил КОНТЕКСТ.md сам</label></li>
+      <li><label><input type="checkbox" data-checklist-item="c9"> Зафиксировал папку в git (лучше — в приватном репозитории) и проверил /context</label></li>
+      <li><label><input type="checkbox" data-checklist-item="c10"> Положил промпт восстановления в ВОССТАНОВЛЕНИЕ.md внутри папки</label></li>
+      <li><label><input type="checkbox" data-checklist-item="c11"> Провёл «учебную тревогу»: другой агент поднял контекст из папки</label></li>
+      <li><label><input type="checkbox" data-checklist-item="c12"> Знаю план первых суток: статус → выгрузка → одна апелляция → работа в другом агенте</label></li>
+    </ul>
+    <p class="checklist-done" id="checklist-done" hidden>Готово: теперь блокировка аккаунта стоит вам вечера, а не месяцев работы.</p>
+  </div>
+</section>
+
+<!-- ══════════ КВИЗ ══════════ -->
+<section class="sec" id="quiz">
+  <div class="sec-head fade">
+    <div class="num-badge n5">?</div>
+    <h2 class="sec-title">Проверьте себя</h2>
+    <p class="sec-desc">Шесть вопросов с разбором. Правильный вариант подсвечивается после ответа.</p>
+  </div>
+  <div class="quiz fade">
+    <div class="quiz-question" data-quiz="1">
+      <p class="quiz-text">Какая доля заблокированных аккаунтов возвращается, считая от всех банов?</p>
+      <div class="quiz-options">
+        <label><input type="radio" name="q1" value="wrong"> Около 10 %</label>
+        <label><input type="radio" name="q1" value="right"> Около 0,37 %</label>
+        <label><input type="radio" name="q1" value="wrong"> Около 50 %</label>
+      </div>
+      <button type="button" class="quiz-check" data-quiz-check="1">Проверить</button>
+      <p class="quiz-feedback" data-quiz-feedback="1" hidden></p>
+    </div>
+    <div class="quiz-question" data-quiz="2">
+      <p class="quiz-text">Что делать в первую очередь, когда видите блокировку?</p>
+      <div class="quiz-options">
+        <label><input type="radio" name="q2" value="wrong"> Входить снова и снова, пока не пустит</label>
+        <label><input type="radio" name="q2" value="wrong"> Сразу завести новый аккаунт</label>
+        <label><input type="radio" name="q2" value="right"> Проверить статус сервиса и выгрузить данные, пока вход возможен</label>
+      </div>
+      <button type="button" class="quiz-check" data-quiz-check="2">Проверить</button>
+      <p class="quiz-feedback" data-quiz-feedback="2" hidden></p>
+    </div>
+    <div class="quiz-question" data-quiz="3">
+      <p class="quiz-text">Что именно экспорт НЕ спасает?</p>
+      <div class="quiz-options">
+        <label><input type="radio" name="q3" value="wrong"> Тексты переписки</label>
+        <label><input type="radio" name="q3" value="right"> Контекст: принятые решения и причины, накопленные правила работы</label>
+        <label><input type="radio" name="q3" value="wrong"> Список чатов</label>
+      </div>
+      <button type="button" class="quiz-check" data-quiz-check="3">Проверить</button>
+      <p class="quiz-feedback" data-quiz-feedback="3" hidden></p>
+    </div>
+    <div class="quiz-question" data-quiz="4">
+      <p class="quiz-text">Почему CLAUDE.md в умной папке состоит из строки <code>@AGENTS.md</code> и пары строк?</p>
+      <div class="quiz-options">
+        <label><input type="radio" name="q4" value="wrong"> Чтобы файл занимал меньше места</label>
+        <label><input type="radio" name="q4" value="right"> Чтобы правила жили в одном файле и два дубликата не разъехались</label>
+        <label><input type="radio" name="q4" value="wrong"> Так требует Git</label>
+      </div>
+      <button type="button" class="quiz-check" data-quiz-check="4">Проверить</button>
+      <p class="quiz-feedback" data-quiz-feedback="4" hidden></p>
+    </div>
+    <div class="quiz-question" data-quiz="5">
+      <p class="quiz-text">Что писать в логах рабочих сессий?</p>
+      <div class="quiz-options">
+        <label><input type="radio" name="q5" value="wrong"> Список выполненных действий</label>
+        <label><input type="radio" name="q5" value="right"> Почему принято именно такое решение</label>
+        <label><input type="radio" name="q5" value="wrong"> Пароли и ключи для удобства</label>
+      </div>
+      <button type="button" class="quiz-check" data-quiz-check="5">Проверить</button>
+      <p class="quiz-feedback" data-quiz-feedback="5" hidden></p>
+    </div>
+    <div class="quiz-question" data-quiz="6">
+      <p class="quiz-text">Чем бан Codex отличается от бана Claude?</p>
+      <div class="quiz-options">
+        <label><input type="radio" name="q6" value="wrong"> У OpenAI публикуют подробную статистику возвратов</label>
+        <label><input type="radio" name="q6" value="right"> Codex сидит в приложении ChatGPT: теряете сразу и Codex, и чат с историей</label>
+        <label><input type="radio" name="q6" value="wrong"> Ничем, это один и тот же аккаунт</label>
+      </div>
+      <button type="button" class="quiz-check" data-quiz-check="6">Проверить</button>
+      <p class="quiz-feedback" data-quiz-feedback="6" hidden></p>
+    </div>
+  </div>
+  <p class="quiz-score-box fade" id="quiz-score" style="margin-top:18px">Отвечено: 0 / 6</p>
+</section>
+
+<!-- ══════════ ЗАКЛЮЧЕНИЕ ══════════ -->
+<section class="sec" id="final">
+  <div class="sec-head fade">
+    <div class="num-badge n6">★</div>
+    <h2 class="sec-title">Что забрать с собой</h2>
+  </div>
+  <ol class="conclusion-list fade">
+    <li><strong>Аккаунт арендован, работа — ваша.</strong> Всё ценное должно жить в файлах у вас на диске.</li>
+    <li><strong>Апелляция — не план.</strong> Возвращают меньше четырёх аккаунтов из тысячи.</li>
+    <li><strong>Страна, оплата и поведение должны быть согласованы</strong> и соответствовать правилам сервиса; перепродажа, общий доступ и токены в сторонних программах — прямой путь к блокировке.</li>
+    <li><strong>Копии делаются заранее</strong>: еженедельный экспорт, срок хранения диалогов 365 дней, архив ~/.claude.</li>
+    <li><strong>Умная папка</strong> (AGENTS.md, КОНТЕКСТ, РЕШЕНИЯ с причинами, логи, ВОССТАНОВЛЕНИЕ) делает бан потерей одного вечера.</li>
+    <li><strong>В первые сутки</strong>: статус → выгрузка → одна апелляция → работа в другом агенте. Без нового «обходного» аккаунта.</li>
+    <li><strong>Раз в месяц — учебная тревога</strong>: непроверенная копия — это надежда.</li>
+  </ol>
+</section>
+
+</main>
+
+<footer>
+  <p>Учебная страница собрана по гайду «Claude и Codex без бана» Эдварда Гришина (Futura AI, <a class="svc-link" href="https://futuraai.ru" target="_blank" rel="noopener">futuraai.ru</a>) и приложенной к нему папке «моя-база». Материал пересобран и сокращён; инструкции по обходу региональных ограничений сознательно не включены.</p>
+  <p>Фактические цифры, цены и правила сервисов меняются — сверяйтесь с официальными страницами. Страница не является юридической или финансовой консультацией. Дата сборки: 23.10.2026.</p>
+</footer>
+
+<script>
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+if (!reduceMotion && "IntersectionObserver" in window) {
+  const reveal = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) { entry.target.classList.add("in"); reveal.unobserve(entry.target); }
+    });
+  }, {threshold: 0.06, rootMargin: "0px 0px -24px"});
+  document.querySelectorAll(".fade").forEach((el) => reveal.observe(el));
+} else {
+  document.querySelectorAll(".fade").forEach((el) => el.classList.add("in"));
+}
+
+const navLinks = [...document.querySelectorAll(".nav-link")];
+const sections = [...document.querySelectorAll("main section[id]")];
+if ("IntersectionObserver" in window) {
+  const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      navLinks.forEach((link) => link.classList.toggle("active", link.getAttribute("href") === `#${entry.target.id}`));
+    });
+  }, {rootMargin: "-35% 0px -55%", threshold: 0});
+  sections.forEach((s) => sectionObserver.observe(s));
+}
+
+document.querySelectorAll("[data-copy]").forEach((button) => {
+  button.addEventListener("click", async () => {
+    const code = document.getElementById(button.dataset.copy);
+    if (!code) return;
+    const original = button.textContent;
+    try { await navigator.clipboard.writeText(code.innerText); button.textContent = "Скопировано"; }
+    catch { button.textContent = "Выделите текст"; }
+    window.setTimeout(() => { button.textContent = original; }, 1600);
+  });
+});
+
+const CHECKLIST_KEY = "account-safety-guide-checklist";
+const checklistInputs = [...document.querySelectorAll("[data-checklist-item]")];
+const checklistProgress = document.getElementById("checklist-progress");
+const checklistDone = document.getElementById("checklist-done");
+function loadChecklistState() { try { return JSON.parse(localStorage.getItem(CHECKLIST_KEY) || "{}"); } catch { return {}; } }
+function saveChecklistState(state) { try { localStorage.setItem(CHECKLIST_KEY, JSON.stringify(state)); } catch { /* приватный режим */ } }
+function renderChecklistProgress() {
+  const checked = checklistInputs.filter((i) => i.checked).length;
+  checklistProgress.style.width = `${Math.round((checked / checklistInputs.length) * 100)}%`;
+  checklistDone.hidden = checked !== checklistInputs.length;
+}
+const savedChecklist = loadChecklistState();
+checklistInputs.forEach((input) => {
+  const key = input.dataset.checklistItem;
+  input.checked = Boolean(savedChecklist[key]);
+  input.addEventListener("change", () => {
+    const state = loadChecklistState();
+    state[key] = input.checked;
+    saveChecklistState(state);
+    renderChecklistProgress();
+  });
+});
+renderChecklistProgress();
+
+const QUIZ_TOTAL = document.querySelectorAll(".quiz-question").length;
+let quizAnswered = 0;
+const quizScoreEl = document.getElementById("quiz-score");
+document.querySelectorAll(".quiz-check").forEach((button) => {
+  button.addEventListener("click", () => {
+    const index = button.dataset.quizCheck;
+    const question = document.querySelector(`.quiz-question[data-quiz="${index}"]`);
+    const selected = question.querySelector(`input[name="q${index}"]:checked`);
+    const feedback = document.querySelector(`[data-quiz-feedback="${index}"]`);
+    if (!selected) {
+      feedback.textContent = "Выберите вариант ответа.";
+      feedback.className = "quiz-feedback incorrect";
+      feedback.hidden = false;
+      return;
+    }
+    const isCorrect = selected.value === "right";
+    feedback.textContent = isCorrect ? "Верно!" : "Не совсем — правильный вариант подсвечен выше.";
+    feedback.className = `quiz-feedback ${isCorrect ? "correct" : "incorrect"}`;
+    feedback.hidden = false;
+    question.querySelectorAll("input").forEach((i) => { i.disabled = true; });
+    question.querySelector('input[value="right"]').closest("label").classList.add("quiz-correct-answer");
+    button.disabled = true;
+    quizAnswered += 1;
+    quizScoreEl.textContent = `Отвечено: ${quizAnswered} / ${QUIZ_TOTAL}`;
+  });
+});
+</script>
+</body>
+</html>
